@@ -7,12 +7,9 @@ public class Customer {
 	private Boolean inElevator = false;
 	private Boolean finished = false;
 	
-	public Customer(int currentFloor, int destinationFloor, String id, Boolean inElevator, Boolean finished) {
+	public Customer(int currentFloor, int destinationFloor) {
 		this.currentFloor = currentFloor;
 		this.destinationFloor = destinationFloor;
-		this.id = id;
-		this.inElevator = inElevator;
-		this.finished = finished;
 	}
 
 	public int getCurrentFloor() {
@@ -53,5 +50,15 @@ public class Customer {
 
 	public void setFinished(Boolean finished) {
 		this.finished = finished;
+	}
+	
+	@Override
+	public String toString() {
+		String objString = "";
+//		private String id = null;
+//		private Boolean inElevator = false;
+//		private Boolean finished = false;
+		objString += "currentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor + "\nid: " + id + "\ninElevator: " + inElevator + "\nfinished: " + finished + "\n\n";
+		return objString;
 	}
 }

@@ -8,11 +8,8 @@ public class Elevator {
 	private int currentFloor = 0;
 	private String direction = "up";
 	
-	public Elevator(int numFloors, ArrayList<Customer> registerList, int currentFloor, String direction) {
+	public Elevator(int numFloors) {
 		this.numFloors = numFloors;
-		this.registerList = registerList;
-		this.currentFloor = currentFloor;
-		this.direction = direction;
 	}
 	
 	// Getters and Setters START
@@ -64,5 +61,16 @@ public class Elevator {
 	
 	public void customerLeaves(Customer customer) {
 		registerList.remove(customer);
+	}
+	
+	@Override
+	public String toString() {
+		String objString = "";
+		objString += "numFloors: " + numFloors + "\nregisterList:\n";
+		for(int i=0; i<registerList.size(); i++) {
+			objString += registerList.get(i);
+		}
+		objString += "\ncurrentFloor: " + currentFloor + "\ndirection: " + direction + "\n\n";
+		return objString;
 	}
 }
