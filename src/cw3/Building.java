@@ -9,22 +9,29 @@ public class Building {
 	private Elevator elevator = null;
 	
 	public Building(int numFloors, int numCustomers) {
-		this.numFloors = numFloors;
+		setNumFloors(numFloors);
 		populateCustomerAL(numCustomers);
-		this.elevator = new Elevator(numFloors);
-		// System.out.print(""); - FOR TESTING ONLY
+		setElevator(new Elevator(numFloors));
 	}
 	
 	private void populateCustomerAL(int numCustomers) {
-		Random rand = new Random();
-		for(int i=0; i<numCustomers; i++) {
-			int rand1, rand2;
-			rand1 = rand.nextInt(numFloors);
-			do {
-				rand2 = rand.nextInt(numFloors);
+		if(numCustomers > 0 && numFloors >= 2) {
+			Random rand = new Random();
+			for(int i=0; i<numCustomers; i++) {
+				int rand1, rand2;
+				rand1 = rand.nextInt(numFloors);
+				do {
+					rand2 = rand.nextInt(numFloors);
+				}
+				while(rand1 == rand2);
+				customerList.add(new Customer(rand1, rand2));
 			}
-			while(rand1 == rand2);
-			customerList.add(new Customer(rand1, rand2));
+		}
+		else {
+			if(numCustomers <= 0)
+			{
+				System.out.println("\nError: The building must have at least one customer.");
+			}
 		}
 	}
 	
@@ -34,7 +41,12 @@ public class Building {
 	}
 
 	public void setNumFloors(int numFloors) {
-		this.numFloors = numFloors;
+		if(numFloors >= 2) {
+			this.numFloors = numFloors;
+		}
+		else {
+			System.out.println("\nError: The building must have at least two floors.");
+		}
 	}
 
 	public ArrayList<Customer> getCustomerList() {

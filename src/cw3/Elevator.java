@@ -9,7 +9,7 @@ public class Elevator {
 	private String direction = "up";
 	
 	public Elevator(int numFloors) {
-		this.numFloors = numFloors;
+		setNumFloors(numFloors);
 	}
 	
 	// Getters and Setters START
@@ -18,7 +18,12 @@ public class Elevator {
 	}
 
 	public void setNumFloors(int numFloors) {
-		this.numFloors = numFloors;
+		if(numFloors >= 2) {
+			this.numFloors = numFloors;
+		}
+		else {
+			System.out.println("\nError: The elevator's building must have at least two floors.");
+		}
 	}
 
 	public ArrayList<Customer> getRegisterList() {

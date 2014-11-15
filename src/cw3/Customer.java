@@ -8,8 +8,8 @@ public class Customer {
 	private Boolean finished = false;
 	
 	public Customer(int currentFloor, int destinationFloor) {
-		this.currentFloor = currentFloor;
-		this.destinationFloor = destinationFloor;
+		setCurrentFloor(currentFloor);
+		setDestinationFloor(destinationFloor);
 	}
 
 	public int getCurrentFloor() {
@@ -17,7 +17,12 @@ public class Customer {
 	}
 
 	public void setCurrentFloor(int currentFloor) {
-		this.currentFloor = currentFloor;
+		if(currentFloor >= 0) {
+			this.currentFloor = currentFloor;
+		}
+		else {
+			System.out.println("\nError: Customer cannot get on from a negative floor.");
+		}
 	}
 
 	public int getDestinationFloor() {
@@ -25,7 +30,12 @@ public class Customer {
 	}
 
 	public void setDestinationFloor(int destinationFloor) {
-		this.destinationFloor = destinationFloor;
+		if(destinationFloor >= 0) {
+			this.destinationFloor = destinationFloor;
+		}
+		else {
+			System.out.println("\nError: Customer cannot get off at a negative floor.");
+		}
 	}
 
 	public String getId() {
