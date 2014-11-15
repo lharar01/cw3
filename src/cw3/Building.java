@@ -16,14 +16,26 @@ public class Building {
 	
 	private void populateCustomerAL(int numCustomers) {
 		if(numCustomers > 0 && numFloors >= 2) {
+			int numFloorsForRand = numFloors;
+			if(numFloors >= 14) {
+				numFloorsForRand++;
+			}
 			Random rand = new Random();
 			for(int i=0; i<numCustomers; i++) {
 				int rand1, rand2;
-				rand1 = rand.nextInt(numFloors);
+				rand1 = rand.nextInt(numFloorsForRand);
 				do {
-					rand2 = rand.nextInt(numFloors);
+					rand2 = rand.nextInt(numFloorsForRand);
 				}
 				while(rand1 == rand2);
+				if(rand1 == 13) {
+					rand1++;
+				}
+				else {
+					if(rand2 == 13) {
+						rand2++;
+					}
+				}
 				customerList.add(new Customer(rand1, rand2));
 			}
 		}
@@ -65,6 +77,50 @@ public class Building {
 		this.elevator = elevator;
 	}
 	// Getters and Setters END
+	
+	private void removeCustomer(Customer customer) {
+		customer.setInElevator(false);
+		customerList.remove(customer);
+	}
+	
+	public void startElevator() {
+		System.out.println("Elevator started."); // Testing only - remove later
+		//while(customerList.size() > 0) { THIS IS THE BEGINNING OF THE BETTER STRATERGY. It will make the elevator stop when all customers have been served.
+		do {
+			// If at top floor, change elevator direction to "down".
+			if(elevator.getCurrentFloor() == elevator.getTopFloor()) {
+				elevator.setDirection("down");
+			}
+			
+			System.out.println("\nElevator is at floor " + elevator.getCurrentFloor() + ", going " + elevator.getDirection()); // Testing only - remove later
+			
+			if(customerList.size() > 0) { // Only needed for default strategy.
+				// Drop off any customers?
+				ArrayList<Customer> regList = elevator.getRegisterList();
+				//int regListLength = regList.size();
+				for(int i=0; i<regList.size(); i++) { // if i is not static, store it in a new variable beforehand and use that.
+					if(regList.get(i).getDestinationFloor() == elevator.getCurrentFloor()) {
+						elevator.customerLeaves(regList.get(i));
+						System.out.println("Customer dropped off at floor " + elevator.getCurrentFloor()); // Testing only - remove later
+						removeCustomer(customerList.get(i));
+						i--;
+					}
+				}
+				
+				// Pick up any customers?
+				int customerListLength = customerList.size();
+				for(int i=0; i<customerListLength; i++) { 
+					if(customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection() == elevator.getDirection()) {
+						elevator.customerJoins(customerList.get(i));
+						System.out.println("Customer picked up at floor " + elevator.getCurrentFloor()); // Testing only - remove later
+					}
+				}
+			}
+			elevator.move();
+		}
+		while(elevator.getCurrentFloor() > 0);
+		System.out.println("Elevator is at floor 0"); // Testing only - remove later
+	}
 	
 	@Override
 	public String toString() {

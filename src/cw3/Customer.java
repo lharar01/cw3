@@ -11,7 +11,8 @@ public class Customer {
 		setCurrentFloor(currentFloor);
 		setDestinationFloor(destinationFloor);
 	}
-
+	
+	// Getters and Setters START
 	public int getCurrentFloor() {
 		return currentFloor;
 	}
@@ -60,6 +61,17 @@ public class Customer {
 
 	public void setFinished(Boolean finished) {
 		this.finished = finished;
+	}
+	// Getters and Setters END
+	
+	public String calcDirection() {
+		if(destinationFloor - currentFloor > 0) {
+			return "up";
+		}
+		if(destinationFloor - currentFloor < 0) {
+			return "down";
+		}
+		return "undetermined";
 	}
 	
 	@Override

@@ -35,6 +35,6 @@ public class AppDriver {
 		Building building = new Building(floors, customers);
 		System.out.print("\nbuilding object:\n-----------------\n\n" + building);
 		input.close();
+		building.startElevator();
 	}
-
 }

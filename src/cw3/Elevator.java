@@ -6,6 +6,7 @@ public class Elevator {
 	private int numFloors = 0;
 	private ArrayList<Customer> registerList = new ArrayList<Customer>();
 	private int currentFloor = 0;
+	private int topFloor = 0;
 	private String direction = "up";
 	
 	public Elevator(int numFloors) {
@@ -20,6 +21,10 @@ public class Elevator {
 	public void setNumFloors(int numFloors) {
 		if(numFloors >= 2) {
 			this.numFloors = numFloors;
+			topFloor = numFloors-1;
+			if(numFloors >= 14) {
+				topFloor++;
+			}
 		}
 		else {
 			System.out.println("\nError: The elevator's building must have at least two floors.");
@@ -41,7 +46,11 @@ public class Elevator {
 	public void setCurrentFloor(int currentFloor) {
 		this.currentFloor = currentFloor;
 	}
-
+	
+	public int getTopFloor() {
+		return topFloor;
+	}
+	
 	public String getDirection() {
 		return direction;
 	}
@@ -61,10 +70,12 @@ public class Elevator {
 	}
 	
 	public void customerJoins(Customer customer) {
+		customer.setInElevator(true);
 		registerList.add(customer);
 	}
 	
 	public void customerLeaves(Customer customer) {
+		customer.setInElevator(false);
 		registerList.remove(customer);
 	}
 	
