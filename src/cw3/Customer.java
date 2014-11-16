@@ -3,9 +3,9 @@ package cw3;
 public class Customer {
 	private int currentFloor = 0;
 	private int destinationFloor = 0;
-	private String id = null;
-	private Boolean inElevator = false;
-	private Boolean finished = false;
+	private String id = null; // needed?
+	private Boolean inElevator = false; //needed?
+	private Boolean finished = false; // probably unneeded, as specifications state customers only use the elevator once.
 	
 	public Customer(int currentFloor, int destinationFloor) {
 		setCurrentFloor(currentFloor);
@@ -80,7 +80,7 @@ public class Customer {
 //		private String id = null;
 //		private Boolean inElevator = false;
 //		private Boolean finished = false;
-		objString += "currentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor + "\nid: " + id + "\ninElevator: " + inElevator + "\nfinished: " + finished + "\n\n";
+		objString += "currentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor + "\nid: " + id + "\ninElevator: " + inElevator + "\nfinished: " + finished + "\ncalcDirection(): " + calcDirection() + "\n\n";
 		return objString;
 	}
 }

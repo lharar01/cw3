@@ -92,34 +92,42 @@ public class Building {
 				elevator.setDirection("down");
 			}
 			
-			System.out.println("\nElevator is at floor " + elevator.getCurrentFloor() + ", going " + elevator.getDirection()); // Testing only - remove later
+			 // Testing only - remove later - START
+			System.out.print("\nElevator is at floor " + elevator.getCurrentFloor());
+			if(elevator.getCurrentFloor() == 0 && elevator.getDirection() == "down") {
+				System.out.println(".");
+			}
+			else {
+				System.out.println(", going " + elevator.getDirection() + ".");
+			}
+			 // Testing only - remove later - END
 			
-			if(customerList.size() > 0) { // Only needed for default strategy.
+			if(customerList.size() > 0 || elevator.getRegisterList().size() > 0) { // Only needed for default strategy.
+
 				// Drop off any customers?
-				ArrayList<Customer> regList = elevator.getRegisterList();
+				//ArrayList<Customer> regList = new ArrayList<Customer>(elevator.getRegisterList());
 				//int regListLength = regList.size();
-				for(int i=0; i<regList.size(); i++) { // if i is not static, store it in a new variable beforehand and use that.
-					if(regList.get(i).getDestinationFloor() == elevator.getCurrentFloor()) {
-						elevator.customerLeaves(regList.get(i));
-						System.out.println("Customer dropped off at floor " + elevator.getCurrentFloor()); // Testing only - remove later
-						removeCustomer(customerList.get(i));
-						i--;
+				for(int i=0; i<elevator.getRegisterList().size(); i++) {
+					if(elevator.getRegisterList().get(i).getDestinationFloor() == elevator.getCurrentFloor()) {
+						elevator.customerLeaves(elevator.getRegisterList().get(i));
+						System.out.println("Customer dropped off."); // Testing only - remove later
 					}
 				}
 				
 				// Pick up any customers?
-				int customerListLength = customerList.size();
-				for(int i=0; i<customerListLength; i++) { 
-					if(customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection() == elevator.getDirection()) {
+				//int customerListLength = customerList.size();
+				for(int i=0; i<customerList.size(); i++) { 
+					if(customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals(elevator.getDirection()) ) {
 						elevator.customerJoins(customerList.get(i));
-						System.out.println("Customer picked up at floor " + elevator.getCurrentFloor()); // Testing only - remove later
+						System.out.println("Customer picked up."); // Testing only - remove later
+						removeCustomer(customerList.get(i));
+						i--;
 					}
 				}
 			}
 			elevator.move();
 		}
-		while(elevator.getCurrentFloor() > 0);
-		System.out.println("Elevator is at floor 0"); // Testing only - remove later
+		while(elevator.getCurrentFloor() >= 0);
 	}
 	
 	@Override

@@ -86,7 +86,7 @@ public class Elevator {
 		for(int i=0; i<registerList.size(); i++) {
 			objString += registerList.get(i);
 		}
-		objString += "\ncurrentFloor: " + currentFloor + "\ndirection: " + direction + "\n\n";
+		objString += "\ncurrentFloor: " + currentFloor + "\ntopFloor: " + topFloor + "\ndirection: " + direction + "\n\n";
 		return objString;
 	}
 }
