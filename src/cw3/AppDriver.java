@@ -6,7 +6,7 @@ public class AppDriver {
 	public static void main(String[] args) {
 		int floors = 0, customers = 0;
 		Scanner input = new Scanner(System.in);
-		System.out.println("Welcome to the world's most efficient elevator!");
+		System.out.println("Welcome to Liran and Shay's elevator!");
 		
 		do {
 			System.out.print("Enter the number of floors: ");

@@ -3,13 +3,16 @@ package cw3;
 public class Customer {
 	private int currentFloor = 0;
 	private int destinationFloor = 0;
-	private String id = null; // needed?
+	private static int customerCount = 0;
+	private int id = 0;
 	private Boolean inElevator = false; //needed?
 	private Boolean finished = false; // probably unneeded, as specifications state customers only use the elevator once.
 	
 	public Customer(int currentFloor, int destinationFloor) {
 		setCurrentFloor(currentFloor);
 		setDestinationFloor(destinationFloor);
+		customerCount++;
+		id = customerCount;
 	}
 	
 	// Getters and Setters START
@@ -39,11 +42,11 @@ public class Customer {
 		}
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -67,6 +67,9 @@ public class Elevator {
 		else {
 			currentFloor--;
 		}
+		if(currentFloor == 13) {
+			move();
+		}
 	}
 	
 	public void customerJoins(Customer customer) {

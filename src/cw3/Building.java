@@ -24,18 +24,16 @@ public class Building {
 			for(int i=0; i<numCustomers; i++) {
 				int rand1, rand2;
 				rand1 = rand.nextInt(numFloorsForRand);
-				do {
-					rand2 = rand.nextInt(numFloorsForRand);
-				}
-				while(rand1 == rand2);
 				if(rand1 == 13) {
 					rand1++;
 				}
-				else {
+				do {
+					rand2 = rand.nextInt(numFloorsForRand);
 					if(rand2 == 13) {
 						rand2++;
 					}
 				}
+				while(rand1 == rand2);
 				customerList.add(new Customer(rand1, rand2));
 			}
 		}
@@ -100,6 +98,19 @@ public class Building {
 			else {
 				System.out.println(", going " + elevator.getDirection() + ".");
 			}
+			System.out.print("Customers in elevator: ");
+			if(elevator.getRegisterList().size() > 0) {
+				for(int i=0; i<elevator.getRegisterList().size(); i++) {
+					System.out.print(elevator.getRegisterList().get(i).getId());
+					if(i < elevator.getRegisterList().size() -1) {
+						System.out.print(", ");
+					}
+				}
+				System.out.println("");
+			}
+			else {
+				System.out.println(" none.");
+			}
 			 // Testing only - remove later - END
 			
 			if(customerList.size() > 0 || elevator.getRegisterList().size() > 0) { // Only needed for default strategy.
@@ -109,8 +120,8 @@ public class Building {
 				//int regListLength = regList.size();
 				for(int i=0; i<elevator.getRegisterList().size(); i++) {
 					if(elevator.getRegisterList().get(i).getDestinationFloor() == elevator.getCurrentFloor()) {
+						System.out.println("Customer " + elevator.getRegisterList().get(i).getId() + " dropped off."); // Testing only - remove later
 						elevator.customerLeaves(elevator.getRegisterList().get(i));
-						System.out.println("Customer dropped off."); // Testing only - remove later
 					}
 				}
 				
@@ -118,8 +129,8 @@ public class Building {
 				//int customerListLength = customerList.size();
 				for(int i=0; i<customerList.size(); i++) { 
 					if(customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals(elevator.getDirection()) ) {
+						System.out.println("Customer " + customerList.get(i).getId() + " picked up."); // Testing only - remove later
 						elevator.customerJoins(customerList.get(i));
-						System.out.println("Customer picked up."); // Testing only - remove later
 						removeCustomer(customerList.get(i));
 						i--;
 					}
