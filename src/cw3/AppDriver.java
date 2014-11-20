@@ -32,9 +32,12 @@ public class AppDriver {
 		}
 		while(customers == 0);
 		
+		input.close();
+		
 		Building building = new Building(floors, customers);
 		System.out.print("\nbuilding object:\n-----------------\n\n" + building);
-		input.close();
-		building.startElevator();
+		building.startElevatorImprovedStrategy();
+		System.out.print("\nbuilding object:\n-----------------\n\n" + building); // for testing
+		building.startElevatorImprovedStrategy(); // for testing
 	}
 }

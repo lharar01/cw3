@@ -7,7 +7,9 @@ public class Elevator {
 	private ArrayList<Customer> registerList = new ArrayList<Customer>();
 	private int currentFloor = 0;
 	private int topFloor = 0;
+	private final int BOTTOM_FLOOR = 0;
 	private String direction = "up";
+	private int maxPersons = 5;
 	
 	public Elevator(int numFloors) {
 		setNumFloors(numFloors);
@@ -51,12 +53,24 @@ public class Elevator {
 		return topFloor;
 	}
 	
+	public int getBottomFloor() {
+		return BOTTOM_FLOOR;
+	}
+	
 	public String getDirection() {
 		return direction;
 	}
 
 	public void setDirection(String direction) {
 		this.direction = direction;
+	}
+	
+	public int getMaxPersons() {
+		return maxPersons;
+	}
+
+	public void setMaxPersons(int maxPersons) {
+		this.maxPersons = maxPersons;
 	}
 	// Getters and Setters END
 	
