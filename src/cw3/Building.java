@@ -9,13 +9,14 @@ public class Building {
 	private ArrayList<Customer> customerList = new ArrayList<Customer>();
 	private Elevator elevator = null;
 	
-	public Building(int numFloors, int numCustomers) {
+	public Building(int numFloors, int numCustomers, int bottomFloor) {
+		setBottomFloor(bottomFloor);
 		setNumFloors(numFloors);
-		populateCustomerAL(numCustomers);
+		populateCustomerList(numCustomers);
 		setElevator(new Elevator(numFloors, bottomFloor));
 	}
 	
-	private void populateCustomerAL(int numCustomers) {
+	private void populateCustomerList(int numCustomers) {
 		if(numCustomers > 0 && numFloors >= 2) {
 			int numFloorsForRand = numFloors;
 			if(numFloors >= 14) {
@@ -50,7 +51,7 @@ public class Building {
 		return bottomFloor;
 	}
 
-	public void setBottomFloor(int bottomFloor) {
+	private void setBottomFloor(int bottomFloor) {
 		this.bottomFloor = bottomFloor;
 	}
 
@@ -59,7 +60,7 @@ public class Building {
 		return numFloors;
 	}
 
-	public void setNumFloors(int numFloors) {
+	private void setNumFloors(int numFloors) {
 		if(numFloors >= 2) {
 			this.numFloors = numFloors;
 		}
@@ -72,21 +73,21 @@ public class Building {
 		return customerList;
 	}
 
-	public void setCustomerList(ArrayList<Customer> customerList) {
+	/*public void setCustomerList(ArrayList<Customer> customerList) {
 		this.customerList = customerList;
-	}
+	}*/
 
 	public Elevator getElevator() {
 		return elevator;
 	}
 
-	public void setElevator(Elevator elevator) {
+	private void setElevator(Elevator elevator) {
 		this.elevator = elevator;
 	}
 	// Getters and Setters END
 	
 	private void removeCustomer(Customer customer) {
-		customer.setInElevator(false);
+		//customer.setInElevator(false);
 		customerList.remove(customer);
 	}
 	
@@ -95,36 +96,8 @@ public class Building {
 		elevator.setCurrentFloor(bottomFloor);
 		//while(customerList.size() > 0) { THIS IS THE BEGINNING OF THE BETTER STRATERGY. It will make the elevator stop when all customers have been served.
 		do {
-			// If at top floor, change elevator direction to "down".
-			if(elevator.getCurrentFloor() == elevator.getTopFloor()) {
-				elevator.setDirection("down");
-			}
-			
-			 // Testing only - remove later - START
-			System.out.print("\nElevator is at floor " + elevator.getCurrentFloor());
-			if(elevator.getCurrentFloor() == elevator.getBottomFloor() && elevator.getDirection() == "down") {
-				System.out.println(".");
-			}
-			else {
-				System.out.println(", going " + elevator.getDirection() + ".");
-			}
-			System.out.print("Customers in elevator: ");
-			if(elevator.getRegisterList().size() > 0) {
-				for(int i=0; i<elevator.getRegisterList().size(); i++) {
-					System.out.print(elevator.getRegisterList().get(i).getId());
-					if(i < elevator.getRegisterList().size() -1) {
-						System.out.print(", ");
-					}
-				}
-				System.out.println("");
-			}
-			else {
-				System.out.println(" none.");
-			}
-			 // Testing only - remove later - END
-			
-			if(customerList.size() > 0 || elevator.getRegisterList().size() > 0) { // Only needed for default strategy.
-
+			System.out.println("\nElevator is at floor " + elevator.getCurrentFloor());
+			if(customerList.size() > 0 || elevator.getRegisterList().size() > 0) {
 				// Drop off any customers?
 				//ArrayList<Customer> regList = new ArrayList<Customer>(elevator.getRegisterList());
 				//int regListLength = regList.size();
@@ -135,7 +108,26 @@ public class Building {
 						i--;
 					}
 				}
+			}
+			
+			// If at top floor, change elevator direction to "down".
+			if(elevator.getCurrentFloor() == elevator.getTopFloor()) {
+				elevator.setDirection("down");
+			}
+			
+			// Testing only - remove later - START
+			System.out.println("Elevator going " + elevator.getDirection());
+			
+//			System.out.print("\nElevator is at floor " + elevator.getCurrentFloor());
+//			if(elevator.getCurrentFloor() == elevator.getBottomFloor() && elevator.getDirection().equals("down")) {
+//				System.out.println(".");
+//			}
+//			else {
+//				System.out.println(", going " + elevator.getDirection() + ".");
+//			}
+			// Testing only - remove later - END
 				
+			if(customerList.size() > 0 || elevator.getRegisterList().size() > 0) {
 				// Pick up any customers?
 				//int customerListLength = customerList.size();
 				for(int i=0; i<customerList.size(); i++) { 
@@ -147,6 +139,23 @@ public class Building {
 					}
 				}
 			}
+			
+			// Testing only - remove later - START
+			System.out.print("Customers in elevator: ");
+			if(elevator.getRegisterList().size() > 0) {
+				for(int i=0; i<elevator.getRegisterList().size(); i++) {
+					System.out.print(elevator.getRegisterList().get(i).getId());
+					if(i < elevator.getRegisterList().size() -1) {
+						System.out.print(", ");
+					}
+				}
+				System.out.println("");
+			}
+			else {
+				System.out.println(" none");
+			}
+			// Testing only - remove later - END
+			
 			elevator.move();
 		}
 		while(elevator.getCurrentFloor() >= bottomFloor);
@@ -216,7 +225,7 @@ public class Building {
 			}
 			
 			// Testing only - remove later - START
-			System.out.print("Customers in elevator (after drop-off and pickup): ");
+			System.out.print("Customers in elevator: ");
 			if(elevator.getRegisterList().size() > 0) {
 				for(int i=0; i<elevator.getRegisterList().size(); i++) {
 					System.out.print(elevator.getRegisterList().get(i).getId());
@@ -227,7 +236,7 @@ public class Building {
 				System.out.println("");
 			}
 			else {
-				System.out.println(" none.");
+				System.out.println(" none");
 			}
 			// Testing only - remove later - END
 			
@@ -236,7 +245,7 @@ public class Building {
 			}
 		} // end while
 		System.out.println("\nRepopulating Customers for testing."); // testing
-		populateCustomerAL(oldNumberOfCustomers); // testing
+		populateCustomerList(oldNumberOfCustomers); // testing
 	}
 	
 	private boolean customersWaitingInDirection() {
@@ -286,7 +295,7 @@ public class Building {
 	@Override
 	public String toString() {
 		String objString = "";
-		objString += "numFloors: " + numFloors + "\n\ncustomerList:\n";
+		objString += "numFloors: " + numFloors + "\nbottomFloor: " + bottomFloor + "\n\ncustomerList:\n";
 		for(int i=0; i<customerList.size(); i++) {
 			objString += "\n" + (i+1) + ".\n" + customerList.get(i);
 		}

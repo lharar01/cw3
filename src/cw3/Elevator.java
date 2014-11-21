@@ -22,7 +22,7 @@ public class Elevator {
 		return numFloors;
 	}
 
-	public void setNumFloors(int numFloors) {
+	private void setNumFloors(int numFloors) {
 		if(numFloors >= 2) {
 			this.numFloors = numFloors;
 			topFloor = numFloors + bottomFloor - 1;
@@ -39,9 +39,9 @@ public class Elevator {
 		return registerList;
 	}
 
-	public void setRegisterList(ArrayList<Customer> registerList) {
-		this.registerList = registerList;
-	}
+//	public void setRegisterList(ArrayList<Customer> registerList) {
+//		this.registerList = registerList;
+//	}
 
 	public int getCurrentFloor() {
 		return currentFloor;
@@ -59,7 +59,7 @@ public class Elevator {
 		return bottomFloor;
 	}
 	
-	public void setBottomFloor(int bottomFloor) {
+	private void setBottomFloor(int bottomFloor) {
 		this.bottomFloor = bottomFloor;
 	}
 	
@@ -93,12 +93,12 @@ public class Elevator {
 	}
 	
 	public void customerJoins(Customer customer) {
-		customer.setInElevator(true);
+		//customer.setInElevator(true);
 		registerList.add(customer);
 	}
 	
 	public void customerLeaves(Customer customer) {
-		customer.setInElevator(false);
+		//customer.setInElevator(false);
 		registerList.remove(customer);
 	}
 	
@@ -121,11 +121,11 @@ public class Elevator {
 	@Override
 	public String toString() {
 		String objString = "";
-		objString += "numFloors: " + numFloors + "\nregisterList:\n";
-		for(int i=0; i<registerList.size(); i++) {
-			objString += registerList.get(i);
-		}
-		objString += "\ncurrentFloor: " + currentFloor + "\ntopFloor: " + topFloor + "\ndirection: " + direction + "\n\n";
+//		objString += "numFloors: " + numFloors + "\nregisterList:\n";
+//		for(int i=0; i<registerList.size(); i++) {
+//			objString += registerList.get(i);
+//		}
+		objString += "numFloors: " + numFloors + "\ncurrentFloor: " + currentFloor + "\ntopFloor: " + topFloor + "\nbottomFloor: " + bottomFloor + "\ndirection: " + direction + "\n\n";
 		return objString;
 	}
 }

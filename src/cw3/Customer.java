@@ -5,14 +5,14 @@ public class Customer {
 	private int destinationFloor = 0;
 	private static int customerCount = 0;
 	private int id = 0;
-	private Boolean inElevator = false; //needed?
-	private Boolean finished = false; // probably unneeded, as specifications state customers only use the elevator once.
+	//private Boolean inElevator = false; //needed?
+	//private Boolean finished = false; // probably unneeded, as specifications state customers only use the elevator once.
 	
 	public Customer(int currentFloor, int destinationFloor) {
 		setCurrentFloor(currentFloor);
 		setDestinationFloor(destinationFloor);
 		customerCount++;
-		id = customerCount;
+		setId(customerCount);
 	}
 	
 	// Getters and Setters START
@@ -20,7 +20,7 @@ public class Customer {
 		return currentFloor;
 	}
 
-	public void setCurrentFloor(int currentFloor) {
+	private void setCurrentFloor(int currentFloor) {
 		//if(currentFloor >= 0) {
 			this.currentFloor = currentFloor;
 //		}
@@ -33,7 +33,7 @@ public class Customer {
 		return destinationFloor;
 	}
 
-	public void setDestinationFloor(int destinationFloor) {
+	private void setDestinationFloor(int destinationFloor) {
 		//if(destinationFloor >= 0) {
 			this.destinationFloor = destinationFloor;
 //		}
@@ -46,32 +46,32 @@ public class Customer {
 		return id;
 	}
 
-	public void setId(int id) {
+	private void setId(int id) {
 		this.id = id;
 	}
 
-	public Boolean getInElevator() {
-		return inElevator;
-	}
-
-	public void setInElevator(Boolean inElevator) {
-		this.inElevator = inElevator;
-	}
-
-	public Boolean getFinished() {
-		return finished;
-	}
-
-	public void setFinished(Boolean finished) {
-		this.finished = finished;
-	}
+//	public Boolean getInElevator() {
+//		return inElevator;
+//	}
+//
+//	public void setInElevator(Boolean inElevator) {
+//		this.inElevator = inElevator;
+//	}
+//
+//	public Boolean getFinished() {
+//		return finished;
+//	}
+//
+//	public void setFinished(Boolean finished) {
+//		this.finished = finished;
+//	}
 	// Getters and Setters END
 	
 	public String calcDirection() {
-		if(destinationFloor - currentFloor > 0) {
+		if(destinationFloor > currentFloor) {
 			return "up";
 		}
-		if(destinationFloor - currentFloor < 0) {
+		if(destinationFloor < currentFloor) {
 			return "down";
 		}
 		return "undetermined";
@@ -83,7 +83,7 @@ public class Customer {
 //		private String id = null;
 //		private Boolean inElevator = false;
 //		private Boolean finished = false;
-		objString += "currentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor + "\nid: " + id + "\ninElevator: " + inElevator + "\nfinished: " + finished + "\ncalcDirection(): " + calcDirection() + "\n\n";
+		objString += "id: " + id + "\ncurrentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor + "\ncalcDirection(): " + calcDirection() + "\n\n";
 		return objString;
 	}
 }
