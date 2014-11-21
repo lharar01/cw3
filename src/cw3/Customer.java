@@ -21,12 +21,12 @@ public class Customer {
 	}
 
 	public void setCurrentFloor(int currentFloor) {
-		if(currentFloor >= 0) {
+		//if(currentFloor >= 0) {
 			this.currentFloor = currentFloor;
-		}
-		else {
-			System.out.println("\nError: Customer cannot get on from a negative floor.");
-		}
+//		}
+//		else {
+//			System.out.println("\nError: Customer cannot get on from a negative floor.");
+//		}
 	}
 
 	public int getDestinationFloor() {
@@ -34,12 +34,12 @@ public class Customer {
 	}
 
 	public void setDestinationFloor(int destinationFloor) {
-		if(destinationFloor >= 0) {
+		//if(destinationFloor >= 0) {
 			this.destinationFloor = destinationFloor;
-		}
-		else {
-			System.out.println("\nError: Customer cannot get off at a negative floor.");
-		}
+//		}
+//		else {
+//			System.out.println("\nError: Customer cannot get off at a negative floor.");
+//		}
 	}
 
 	public int getId() {

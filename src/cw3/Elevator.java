@@ -7,12 +7,14 @@ public class Elevator {
 	private ArrayList<Customer> registerList = new ArrayList<Customer>();
 	private int currentFloor = 0;
 	private int topFloor = 0;
-	private final int BOTTOM_FLOOR = 0;
+	private int bottomFloor = 0;
 	private String direction = "up";
 	private int maxPersons = 5;
 	
-	public Elevator(int numFloors) {
+	public Elevator(int numFloors, int bottomFloor) {
+		setBottomFloor(bottomFloor);
 		setNumFloors(numFloors);
+		setCurrentFloor(bottomFloor);
 	}
 	
 	// Getters and Setters START
@@ -23,8 +25,8 @@ public class Elevator {
 	public void setNumFloors(int numFloors) {
 		if(numFloors >= 2) {
 			this.numFloors = numFloors;
-			topFloor = numFloors-1;
-			if(numFloors >= 14) {
+			topFloor = numFloors + bottomFloor - 1;
+			if(topFloor >= 13) {
 				topFloor++;
 			}
 		}
@@ -54,7 +56,11 @@ public class Elevator {
 	}
 	
 	public int getBottomFloor() {
-		return BOTTOM_FLOOR;
+		return bottomFloor;
+	}
+	
+	public void setBottomFloor(int bottomFloor) {
+		this.bottomFloor = bottomFloor;
 	}
 	
 	public String getDirection() {
@@ -94,6 +100,22 @@ public class Elevator {
 	public void customerLeaves(Customer customer) {
 		customer.setInElevator(false);
 		registerList.remove(customer);
+	}
+	
+	public void changeDirection() {
+		if(getDirection() == "up") {
+			System.out.println("--Changing direction to down--");
+			setDirection("down");
+		}
+		else {
+			if(getDirection() == "down") {
+				System.out.println("--Changing direction to up--");
+				setDirection("up");
+			}
+			else {
+				System.out.println("Error when trying to change elevator direction: direction is neither up nor down.");
+			}
+		}
 	}
 	
 	@Override

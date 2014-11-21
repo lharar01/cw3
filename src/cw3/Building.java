@@ -5,13 +5,14 @@ import java.util.Random;
 
 public class Building {
 	private int numFloors = 0;
+	private int bottomFloor = 0;
 	private ArrayList<Customer> customerList = new ArrayList<Customer>();
 	private Elevator elevator = null;
 	
 	public Building(int numFloors, int numCustomers) {
 		setNumFloors(numFloors);
 		populateCustomerAL(numCustomers);
-		setElevator(new Elevator(numFloors));
+		setElevator(new Elevator(numFloors, bottomFloor));
 	}
 	
 	private void populateCustomerAL(int numCustomers) {
@@ -23,12 +24,12 @@ public class Building {
 			Random rand = new Random();
 			for(int i=0; i<numCustomers; i++) {
 				int rand1, rand2;
-				rand1 = rand.nextInt(numFloorsForRand);
+				rand1 = rand.nextInt(numFloorsForRand) + bottomFloor;
 				if(rand1 == 13) {
 					rand1++;
 				}
 				do {
-					rand2 = rand.nextInt(numFloorsForRand);
+					rand2 = rand.nextInt(numFloorsForRand) + bottomFloor;
 					if(rand2 == 13) {
 						rand2++;
 					}
@@ -40,11 +41,19 @@ public class Building {
 		else {
 			if(numCustomers <= 0)
 			{
-				System.out.println("\nError: The building must have at least one customer.");
+				System.out.println("\nError: The building must have at least one customer and 2 floors.");
 			}
 		}
 	}
 	
+	public int getBottomFloor() {
+		return bottomFloor;
+	}
+
+	public void setBottomFloor(int bottomFloor) {
+		this.bottomFloor = bottomFloor;
+	}
+
 	// Getters and Setters START
 	public int getNumFloors() {
 		return numFloors;
@@ -83,7 +92,7 @@ public class Building {
 	
 	public void startElevatorDefaultStrategy() {
 		System.out.println("Default strategy elevator started."); // Testing only - remove later
-		elevator.setCurrentFloor(0);
+		elevator.setCurrentFloor(bottomFloor);
 		//while(customerList.size() > 0) { THIS IS THE BEGINNING OF THE BETTER STRATERGY. It will make the elevator stop when all customers have been served.
 		do {
 			// If at top floor, change elevator direction to "down".
@@ -140,7 +149,7 @@ public class Building {
 			}
 			elevator.move();
 		}
-		while(elevator.getCurrentFloor() >= 0);
+		while(elevator.getCurrentFloor() >= bottomFloor);
 	}
 	
 	public void startElevatorImprovedStrategy() {
@@ -159,7 +168,7 @@ public class Building {
 					elevator.customerLeaves(elevator.getRegisterList().get(i));
 					i--;
 				}
-			}
+			}			
 			
 			if(elevator.getCurrentFloor() == elevator.getTopFloor()) {
 				elevator.setDirection("down");
@@ -174,7 +183,7 @@ public class Building {
 			if(!customersWaitingInDirection() && elevator.getRegisterList().size() == 0) {
 				System.out.println("--No more customers waiting in direction and no customers in lift.--");
 				if(elevator.getCurrentFloor() != elevator.getBottomFloor() && elevator.getCurrentFloor() != elevator.getTopFloor()) {
-					changeDirection();
+					elevator.changeDirection();
 				}
 				if(!customersWaitingInDirection()) {
 					System.out.println("\n--No more customers waiting in building--\n");
@@ -236,7 +245,7 @@ public class Building {
 			return false;
 		}*/
 		//if(inclCurrentFloor) {
-		// If elevator is going up, for all customers, if customer is on a higher floor, or customer is on the same floor and heading up.
+		// If elevator is going up, for all customers, if customer is on a higher floor, or customer is on the same floor and heading up - return true.
 		if(elevator.getDirection().equals("up")) {
 			for(int i=0; i<customerList.size(); i++) {
 				if(customerList.get(i).getCurrentFloor() > elevator.getCurrentFloor() || (customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals("up"))) {
@@ -245,7 +254,7 @@ public class Building {
 			}
 		}
 		else {
-			// If elevator is going down, for all customers, if customer is on a lower floor, or customer is on the same floor and heading down.
+			// If elevator is going down, for all customers, if customer is on a lower floor, or customer is on the same floor and heading down - return true.
 			if(elevator.getDirection().equals("down")) {
 				for(int i=0; i<customerList.size(); i++) {
 					if(customerList.get(i).getCurrentFloor() < elevator.getCurrentFloor() || (customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals("down"))) {
@@ -256,16 +265,12 @@ public class Building {
 			else {
 				System.out.println("\n--Invalid elevator direction--\n");
 			}
-		}
-		
-		
-		
-		
-		for(int i=0; i<customerList.size(); i++) {
-			if( (elevator.getDirection().equals("up") && customerList.get(i).getCurrentFloor() >= elevator.getCurrentFloor()) || (elevator.getDirection().equals("down") && customerList.get(i).getCurrentFloor() <= elevator.getCurrentFloor()) ) {
-				return true;
-			}
-		}
+		}		
+//		for(int i=0; i<customerList.size(); i++) {
+//			if( (elevator.getDirection().equals("up") && customerList.get(i).getCurrentFloor() >= elevator.getCurrentFloor()) || (elevator.getDirection().equals("down") && customerList.get(i).getCurrentFloor() <= elevator.getCurrentFloor()) ) {
+//				return true;
+//			}
+//		}
 		//}
 //		else {
 //			for(int i=0; i<customerList.size(); i++) {
@@ -276,22 +281,6 @@ public class Building {
 //		}
 		//System.out.println("\n--No more customers waiting in direction--\n");
 		return false;
-	}
-	
-	private void changeDirection() {
-		if(elevator.getDirection() == "up") {
-			System.out.println("--Changing direction to down--");
-			elevator.setDirection("down");
-		}
-		else {
-			if(elevator.getDirection() == "down") {
-				System.out.println("--Changing direction to up--");
-				elevator.setDirection("up");
-			}
-			else {
-				System.out.println("Error when trying to change elevator direction: direction is neither up nor down.");
-			}
-		}
 	}
 	
 	@Override
