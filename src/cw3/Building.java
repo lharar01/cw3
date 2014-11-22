@@ -99,15 +99,7 @@ public class Building {
 			System.out.println("\nElevator is at floor " + elevator.getCurrentFloor());
 			if(customerList.size() > 0 || elevator.getRegisterList().size() > 0) {
 				// Drop off any customers?
-				//ArrayList<Customer> regList = new ArrayList<Customer>(elevator.getRegisterList());
-				//int regListLength = regList.size();
-				for(int i=0; i<elevator.getRegisterList().size(); i++) {
-					if(elevator.getRegisterList().get(i).getDestinationFloor() == elevator.getCurrentFloor()) {
-						System.out.println("Customer " + elevator.getRegisterList().get(i).getId() + " dropped off."); // Testing only - remove later
-						elevator.customerLeaves(elevator.getRegisterList().get(i));
-						i--;
-					}
-				}
+				dropOffCustomers();
 			}
 			
 			// If at top floor, change elevator direction to "down".
@@ -115,46 +107,16 @@ public class Building {
 				elevator.setDirection("down");
 			}
 			
-			// Testing only - remove later - START
+			// Testing only - remove later
 			System.out.println("Elevator going " + elevator.getDirection());
-			
-//			System.out.print("\nElevator is at floor " + elevator.getCurrentFloor());
-//			if(elevator.getCurrentFloor() == elevator.getBottomFloor() && elevator.getDirection().equals("down")) {
-//				System.out.println(".");
-//			}
-//			else {
-//				System.out.println(", going " + elevator.getDirection() + ".");
-//			}
-			// Testing only - remove later - END
 				
 			if(customerList.size() > 0 || elevator.getRegisterList().size() > 0) {
 				// Pick up any customers?
-				//int customerListLength = customerList.size();
-				for(int i=0; i<customerList.size(); i++) { 
-					if(customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals(elevator.getDirection()) ) {
-						System.out.println("Customer " + customerList.get(i).getId() + " picked up."); // Testing only - remove later
-						elevator.customerJoins(customerList.get(i));
-						removeCustomer(customerList.get(i));
-						i--;
-					}
-				}
+				pickUpCustomers();
 			}
 			
-			// Testing only - remove later - START
-			System.out.print("Customers in elevator: ");
-			if(elevator.getRegisterList().size() > 0) {
-				for(int i=0; i<elevator.getRegisterList().size(); i++) {
-					System.out.print(elevator.getRegisterList().get(i).getId());
-					if(i < elevator.getRegisterList().size() -1) {
-						System.out.print(", ");
-					}
-				}
-				System.out.println("");
-			}
-			else {
-				System.out.println(" none");
-			}
-			// Testing only - remove later - END
+			// Testing only - remove later
+			printCustomersInElevator();
 			
 			elevator.move();
 		}
@@ -164,21 +126,13 @@ public class Building {
 	public void startElevatorImprovedStrategy() {
 		System.out.println("Improved strategy elevator started."); // Testing only - remove later
 		int oldNumberOfCustomers = customerList.size(); // Remove later
-		// THIS IS THE BEGINNING OF THE BETTER STRATERGY. It will make the elevator stop when all customers have been served.
 		while(customerList.size() > 0 || elevator.getRegisterList().size() > 0) {
-			/*if(elevator.getCurrentFloor() == elevator.getTopFloor()) {
-				elevator.setDirection("down");
-			}*/
 			System.out.println("\nElevator is at floor " + elevator.getCurrentFloor());
-			// Drop off any customers?
-			for(int i=0; i<elevator.getRegisterList().size(); i++) {
-				if(elevator.getRegisterList().get(i).getDestinationFloor() == elevator.getCurrentFloor()) {
-					System.out.println("Customer " + elevator.getRegisterList().get(i).getId() + " dropped off."); // Testing only - remove later
-					elevator.customerLeaves(elevator.getRegisterList().get(i));
-					i--;
-				}
-			}			
 			
+			// Drop off any customers?
+			dropOffCustomers();			
+			
+			// Set relevant direction at end floors.
 			if(elevator.getCurrentFloor() == elevator.getTopFloor()) {
 				elevator.setDirection("down");
 			}
@@ -188,7 +142,8 @@ public class Building {
 				}
 			}
 			
-			// If no customers waiting in direction and register list empty, change direction.
+			// If no customers waiting in direction and register list empty, change direction. If no customers waiting in new direction, print "no customers in
+			// building..." and break.
 			if(!customersWaitingInDirection() && elevator.getRegisterList().size() == 0) {
 				System.out.println("--No more customers waiting in direction and no customers in lift.--");
 				if(elevator.getCurrentFloor() != elevator.getBottomFloor() && elevator.getCurrentFloor() != elevator.getTopFloor()) {
@@ -200,45 +155,14 @@ public class Building {
 				}
 			}
 			
-			// Testing only - remove later - START
-			/*if(elevator.getCurrentFloor() == elevator.getBottomFloor() && elevator.getDirection().equals("down")) {
-				System.out.println(".");
-			}
-			else {*/
+			// Testing only - remove later
 			System.out.println("Elevator going " + elevator.getDirection());
-			//}
-			// Testing only - remove later - END
 			
 			// Pick up any customers?
-			for(int i=0; i<customerList.size(); i++) { 
-				if(customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals(elevator.getDirection()) ) {
-					//if(elevator.getRegisterList().size() < elevator.getMaxPersons()) {
-						System.out.println("Customer " + customerList.get(i).getId() + " picked up."); // Testing only - remove later
-						elevator.customerJoins(customerList.get(i));
-						removeCustomer(customerList.get(i));
-						i--;
-					//}
-//					else {
-//						System.out.println("Elevator full. Customer " + customerList.get(i).getId() + " will be picked up on next run.");
-//					}
-				}
-			}
+			pickUpCustomers();
 			
-			// Testing only - remove later - START
-			System.out.print("Customers in elevator: ");
-			if(elevator.getRegisterList().size() > 0) {
-				for(int i=0; i<elevator.getRegisterList().size(); i++) {
-					System.out.print(elevator.getRegisterList().get(i).getId());
-					if(i < elevator.getRegisterList().size() -1) {
-						System.out.print(", ");
-					}
-				}
-				System.out.println("");
-			}
-			else {
-				System.out.println(" none");
-			}
-			// Testing only - remove later - END
+			// Testing only - remove later
+			printCustomersInElevator();
 			
 			if(customersWaitingInDirection() || elevator.getRegisterList().size() > 0) {
 				elevator.move();
@@ -248,16 +172,48 @@ public class Building {
 		populateCustomerList(oldNumberOfCustomers); // testing
 	}
 	
+	private void dropOffCustomers() {
+		for(int i=0; i<elevator.getRegisterList().size(); i++) {
+			if(elevator.getRegisterList().get(i).getDestinationFloor() == elevator.getCurrentFloor()) {
+				System.out.println("Customer " + elevator.getRegisterList().get(i).getId() + " dropped off."); // Testing only - remove later
+				elevator.customerLeaves(elevator.getRegisterList().get(i));
+				i--;
+			}
+		}
+	}
+	
+	private void pickUpCustomers() {
+		for(int i=0; i<customerList.size(); i++) { 
+			if(customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals(elevator.getDirection()) ) {
+				System.out.println("Customer " + customerList.get(i).getId() + " picked up."); // Testing only - remove later
+				elevator.customerJoins(customerList.get(i));
+				removeCustomer(customerList.get(i));
+				i--;
+			}
+		}
+	}
+	
+	private void printCustomersInElevator() {
+		System.out.print("Customers in elevator: ");
+		if(elevator.getRegisterList().size() > 0) {
+			for(int i=0; i<elevator.getRegisterList().size(); i++) {
+				System.out.print(elevator.getRegisterList().get(i).getId());
+				if(i < elevator.getRegisterList().size() -1) {
+					System.out.print(", ");
+				}
+			}
+			System.out.println("");
+		}
+		else {
+			System.out.println(" none");
+		}
+	}
+	
 	private boolean customersWaitingInDirection() {
-		/*if(elevator.getCurrentFloor() == elevator.getTopFloor()) {
-			System.out.println("--Top floor reached--");
-			return false;
-		}*/
-		//if(inclCurrentFloor) {
 		// If elevator is going up, for all customers, if customer is on a higher floor, or customer is on the same floor and heading up - return true.
 		if(elevator.getDirection().equals("up")) {
-			for(int i=0; i<customerList.size(); i++) {
-				if(customerList.get(i).getCurrentFloor() > elevator.getCurrentFloor() || (customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals("up"))) {
+			for(Customer customer : customerList) {
+				if(customer.getCurrentFloor() > elevator.getCurrentFloor() || (customer.getCurrentFloor() == elevator.getCurrentFloor() && customer.calcDirection().equals("up"))) {
 					return true;
 				}
 			}
@@ -265,8 +221,8 @@ public class Building {
 		else {
 			// If elevator is going down, for all customers, if customer is on a lower floor, or customer is on the same floor and heading down - return true.
 			if(elevator.getDirection().equals("down")) {
-				for(int i=0; i<customerList.size(); i++) {
-					if(customerList.get(i).getCurrentFloor() < elevator.getCurrentFloor() || (customerList.get(i).getCurrentFloor() == elevator.getCurrentFloor() && customerList.get(i).calcDirection().equals("down"))) {
+				for(Customer customer : customerList) {
+					if(customer.getCurrentFloor() < elevator.getCurrentFloor() || (customer.getCurrentFloor() == elevator.getCurrentFloor() && customer.calcDirection().equals("down"))) {
 						return true;
 					}
 				}
@@ -274,21 +230,7 @@ public class Building {
 			else {
 				System.out.println("\n--Invalid elevator direction--\n");
 			}
-		}		
-//		for(int i=0; i<customerList.size(); i++) {
-//			if( (elevator.getDirection().equals("up") && customerList.get(i).getCurrentFloor() >= elevator.getCurrentFloor()) || (elevator.getDirection().equals("down") && customerList.get(i).getCurrentFloor() <= elevator.getCurrentFloor()) ) {
-//				return true;
-//			}
-//		}
-		//}
-//		else {
-//			for(int i=0; i<customerList.size(); i++) {
-//				if( (elevator.getDirection().equals("up") && customerList.get(i).getCurrentFloor() > elevator.getCurrentFloor()) || (elevator.getDirection().equals("down") && customerList.get(i).getCurrentFloor() < elevator.getCurrentFloor()) ) {
-//					return true;
-//				}
-//			}
-//		}
-		//System.out.println("\n--No more customers waiting in direction--\n");
+		}
 		return false;
 	}
 	

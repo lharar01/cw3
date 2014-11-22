@@ -36,12 +36,12 @@ public class AppDriver {
 		
 		Building building = new Building(floors, customers, bottomFloor);
 		
-		System.out.print("\nbuilding object:\n-----------------\n\n" + building);
-		building.startElevatorDefaultStrategy();
-		
 //		System.out.print("\nbuilding object:\n-----------------\n\n" + building);
-//		building.startElevatorImprovedStrategy();
-//		System.out.print("\nbuilding object:\n-----------------\n\n" + building); // for testing
-//		building.startElevatorImprovedStrategy(); // for testing
+//		building.startElevatorDefaultStrategy();
+		
+		System.out.print("\nbuilding object:\n-----------------\n\n" + building);
+		building.startElevatorImprovedStrategy();
+		System.out.print("\nbuilding object:\n-----------------\n\n" + building); // for testing
+		building.startElevatorImprovedStrategy(); // for testing
 	}
 }

@@ -9,7 +9,6 @@ public class Elevator {
 	private int topFloor = 0;
 	private int bottomFloor = 0;
 	private String direction = "up";
-	private int maxPersons = 5;
 	
 	public Elevator(int numFloors, int bottomFloor) {
 		setBottomFloor(bottomFloor);
@@ -69,14 +68,6 @@ public class Elevator {
 
 	public void setDirection(String direction) {
 		this.direction = direction;
-	}
-	
-	public int getMaxPersons() {
-		return maxPersons;
-	}
-
-	public void setMaxPersons(int maxPersons) {
-		this.maxPersons = maxPersons;
 	}
 	// Getters and Setters END
 	
