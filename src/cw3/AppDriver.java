@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class AppDriver {
 	public static void main(String[] args) {
-		int floors = 0, customers = 0, bottomFloor = -4;
+		int floors = 0, customers = 0, bottomFloor = 0;
 		Scanner input = new Scanner(System.in);
 		System.out.println("Welcome to Liran and Shay's elevator!");
 		
@@ -37,11 +37,14 @@ public class AppDriver {
 		Building building = new Building(floors, customers, bottomFloor);
 		
 //		System.out.print("\nbuilding object:\n-----------------\n\n" + building);
-//		building.startElevatorDefaultStrategy();
+//		building.getElevator().startElevatorDefaultStrategy();
 		
 		System.out.print("\nbuilding object:\n-----------------\n\n" + building);
-		building.startElevatorImprovedStrategy();
+		building.getElevator().startElevatorImprovedStrategy();
+		
+		building.populateCustomerList(customers);
+		building.getElevator().setCustomerList(building.getCustomerList());
 		System.out.print("\nbuilding object:\n-----------------\n\n" + building); // for testing
-		building.startElevatorImprovedStrategy(); // for testing
+		building.getElevator().startElevatorImprovedStrategy(); // for testing
 	}
 }

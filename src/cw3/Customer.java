@@ -5,8 +5,8 @@ public class Customer {
 	private int destinationFloor = 0;
 	private static int customerCount = 0;
 	private int id = 0;
-	//private Boolean inElevator = false; //needed?
-	//private Boolean finished = false; // probably unneeded, as specifications state customers only use the elevator once.
+	private Boolean inElevator = false;
+	private Boolean finished = false;
 	
 	public Customer(int currentFloor, int destinationFloor) {
 		setCurrentFloor(currentFloor);
@@ -50,21 +50,21 @@ public class Customer {
 		this.id = id;
 	}
 
-//	public Boolean getInElevator() {
-//		return inElevator;
-//	}
-//
-//	public void setInElevator(Boolean inElevator) {
-//		this.inElevator = inElevator;
-//	}
-//
-//	public Boolean getFinished() {
-//		return finished;
-//	}
-//
-//	public void setFinished(Boolean finished) {
-//		this.finished = finished;
-//	}
+	public Boolean isInElevator() {
+		return inElevator;
+	}
+
+	public void setInElevator(Boolean inElevator) {
+		this.inElevator = inElevator;
+	}
+
+	public Boolean isFinished() {
+		return finished;
+	}
+
+	public void setFinished(Boolean finished) {
+		this.finished = finished;
+	}
 	// Getters and Setters END
 	
 	public String calcDirection() {
