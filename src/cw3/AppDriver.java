@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class AppDriver {
 	public static void main(String[] args) {
 		int floors = 0, customers = 0, bottomFloor = -2, movesDefault = -1, movesImproved = -1;
-		boolean annotations = false;
+		boolean annotations = true;
 		Scanner input = new Scanner(System.in);
-		System.out.println("Welcome to Liran and Shay's elevator!");
+		System.out.println("--==Welcome to Liran and Shay's elevator!==--\n");
 		
-		// WORK IN PROGRESS - START
 		boolean typeMismatch;
 		boolean illegalInput;
+		
 		do {
 			typeMismatch = true;
 			illegalInput = true;
@@ -19,35 +19,54 @@ public class AppDriver {
 			if(input.hasNextInt()) {
 				floors = input.nextInt();
 				typeMismatch = false;
-			}
-			if(input.nextInt() > 1) {
-				illegalInput = false;
-			}
-			if(!input.hasNextInt()) {
-				System.out.print("\nThe number of floors must be an integer.");
-			}
-			else {
-				if(input.nextInt() <= 1) {
-					System.out.print("\nThe building must have at least 2 floors to be equipped with an elevator.");
+				if(floors > 1) {
+					illegalInput = false;
 				}
-			}
-			System.out.println(" Please try again.");
-			input.nextLine();
-		}
-		while(!typeMismatch && !illegalInput);
-		// WORK IN PROGRESS - END
-		
-		do {
-			System.out.print("Enter the number of customers: ");
-			if(input.hasNextInt()) {
-				customers = input.nextInt();
-			}
-			else {
-				System.out.println("\nThe number of customers must be an integer.");
+			}			
+			if(typeMismatch || illegalInput) {
+				if(typeMismatch) {
+					System.out.print("\nThe number of floors must be an integer.");
+				}
+				else {
+					System.out.print("\nThe building must have at least two floors to be equipped with an elevator.");
+				}
+				System.out.println(" Please try again.");
 				input.nextLine();
 			}
 		}
-		while(customers == 0);
+		while(typeMismatch || illegalInput);
+		
+		System.out.println("");
+		do {
+			typeMismatch = true;
+			illegalInput = true;
+			System.out.print("Enter the number of customers: ");
+			if(input.hasNextInt()) {
+				customers = input.nextInt();
+				typeMismatch = false;
+				if(customers > 0) {
+					illegalInput = false;
+				}
+			}			
+			if(typeMismatch || illegalInput) {
+				if(typeMismatch) {
+					System.out.print("\nThe number of customers must be an integer.");
+				}
+				else {
+					System.out.print("\nThere must be at least one customer in order to use the elevator.");
+				}
+				System.out.println(" Please try again.");
+				input.nextLine();
+			}
+		}
+		while(typeMismatch || illegalInput);
+		
+		// Doesn't work...
+//		System.out.print("Would you like annotations? ");
+//		String annotationsAnswer = input.nextLine(); 
+//		if(annotationsAnswer == "yes" || annotationsAnswer == "y") {
+//			annotations = true;
+//		}
 		
 		input.close();
 		
