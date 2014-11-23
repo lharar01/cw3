@@ -83,7 +83,8 @@ public class Customer {
 //		private String id = null;
 //		private Boolean inElevator = false;
 //		private Boolean finished = false;
-		objString += "id: " + id + "\ncurrentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor + "\ncalcDirection(): " + calcDirection() + "\n\n";
+		objString += "id: " + id + "\ncurrentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor
+				+ "\ncalcDirection(): " + calcDirection() + "\n\n";
 		return objString;
 	}
 }

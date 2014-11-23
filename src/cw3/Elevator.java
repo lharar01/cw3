@@ -10,6 +10,7 @@ public class Elevator {
 	private int topFloor = 0;
 	private int bottomFloor = 0;
 	private String direction = "up";
+	private boolean annotations = false;
 	
 	public Elevator(int numFloors, int bottomFloor, ArrayList<Customer> customerList) {
 		setBottomFloor(bottomFloor);
@@ -81,88 +82,121 @@ public class Elevator {
 	}
 	// Getters and Setters END
 	
-	public void startElevatorDefaultStrategy() {
-		System.out.println("Default strategy elevator started."); // Testing only - remove later
-		ArrayList<Customer> currentCustomerList = new ArrayList<Customer>(customerList); // I need to change everything to keep the customers,
-		// so that I can compare the two methods...
+	public boolean isAnnotations() {
+		return annotations;
+	}
+
+	public void setAnnotations(boolean annotations) {
+		this.annotations = annotations;
+	}
+
+	private void printlnIfAnnotationsOn(String printStr) {
+		if(annotations) {
+			System.out.println(printStr);
+		}
+	}
+	
+	public void setAllCustomersToNotFinished() {
+		for(Customer customer : customerList) {
+			customer.setFinished(false);
+		}
+	}
+	
+	public int startElevatorDefaultStrategy() {
+		printlnIfAnnotationsOn("\n--Default strategy elevator started--"); // Testing only - remove later
+		int moveCounter = 0;
+		int floorBeforeMove = bottomFloor + 1;
 		setCurrentFloor(bottomFloor);
-		//while(customerList.size() > 0) { THIS IS THE BEGINNING OF THE BETTER STRATERGY. It will make the elevator stop when all customers have been served.
 		do {
-			System.out.println("\nElevator is at floor " + getCurrentFloor());
-			if(currentCustomerList.size() > 0 || registerList.size() > 0) {
+			printlnIfAnnotationsOn("\nElevator is at floor " + currentFloor);
+			if(customerList.size() > 0 || registerList.size() > 0) {
 				// Drop off any customers?
 				dropOffCustomers();
 			}
 			
 			// If at top floor, change elevator direction to "down".
-			if(getCurrentFloor() == getTopFloor()) {
+			if(currentFloor == topFloor) {
 				setDirection("down");
 			}
 			
-			// Testing only - remove later
-			System.out.println("Elevator going " + getDirection());
-				
-			if(currentCustomerList.size() > 0 || registerList.size() > 0) {
-				// Pick up any customers?
-				pickUpCustomers();
+			if(!(currentFloor == bottomFloor && direction == "up")) {
+				floorBeforeMove = currentFloor;
 			}
 			
-			// Testing only - remove later
-			printCustomersInElevator();
-			
-			move();
+			if(!(currentFloor == bottomFloor && direction == "down")) {
+				// Testing only - remove later
+				printlnIfAnnotationsOn("Elevator going " + direction);
+					
+				if(customerList.size() > 0 || registerList.size() > 0) {
+					// Pick up any customers?
+					pickUpCustomers();
+				}
+				
+				// Testing only - remove later
+				printCustomersInElevatorIfAnnotationsOn();
+				
+				move();
+				moveCounter++;
+			}
 		}
-		while(getCurrentFloor() >= bottomFloor);
+		while(floorBeforeMove > bottomFloor);
+		return moveCounter;
 	}
 	
-	public void startElevatorImprovedStrategy() {
-		System.out.println("Improved strategy elevator started."); // Testing only - remove later
-		ArrayList<Customer> currentCustomerList = new ArrayList<Customer>(customerList);
+	public int startElevatorImprovedStrategy() {
+		printlnIfAnnotationsOn("\n--Improved strategy elevator started--"); // Testing only - remove later
+		int moveCounter = 0;
+		//ArrayList<Customer> currentCustomerList = new ArrayList<Customer>(customerList);
 		//int oldNumberOfCustomers = customerList.size(); // Remove later
-		while(currentCustomerList.size() > 0 || registerList.size() > 0) {
-			System.out.println("\nElevator is at floor " + getCurrentFloor());
+		//while(currentCustomerList.size() > 0 || registerList.size() > 0) {
+		// THIS IS THE BEGINNING OF THE BETTER STRATERGY. It will make the elevator stop when all customers have been served.
+		while(unservedCustomersRemain()) {
+			printlnIfAnnotationsOn("\nElevator is at floor " + currentFloor);
 			
 			// Drop off any customers?
 			dropOffCustomers();			
 			
 			// Set relevant direction at end floors.
-			if(getCurrentFloor() == getTopFloor()) {
+			if(currentFloor == topFloor) {
 				setDirection("down");
 			}
 			else {
-				if(getCurrentFloor() == getBottomFloor()) {
+				if(currentFloor == bottomFloor) {
 					setDirection("up");
 				}
 			}
 			
+			//unservedCustsRemain = unservedCustomersRemain();
 			// If no customers waiting in direction and register list empty, change direction. If no customers waiting in new direction, print "no customers in
 			// building..." and break.
-			if(!customersWaitingInDirection() && registerList.size() == 0) {
-				System.out.println("--No more customers waiting in direction and no customers in lift.--");
-				if(getCurrentFloor() != getBottomFloor() && getCurrentFloor() != getTopFloor()) {
+			if(unservedCustomersRemain()) {
+				if(!customersWaitingInDirection() && registerList.size() == 0) {
+					printlnIfAnnotationsOn("--No more customers waiting in direction and no customers in lift.--");
+					//if(currentFloor != bottomFloor && currentFloor != topFloor) {
+					//if(unservedCustomersRemain()) {
 					changeDirection();
 				}
-				if(!customersWaitingInDirection()) {
-					System.out.println("\n--No more customers waiting in building--\n");
-					break;
-				}
-			}
-			
-			// Testing only - remove later
-			System.out.println("Elevator going " + getDirection());
-			
-			// Pick up any customers?
-			pickUpCustomers();
-			
-			// Testing only - remove later
-			printCustomersInElevator();
-			
-			if(customersWaitingInDirection() || registerList.size() > 0) {
+					// Testing only - remove later
+				printlnIfAnnotationsOn("Elevator going " + direction);
+				
+				// Pick up any customers?
+				pickUpCustomers();
+				
+				// Testing only - remove later
+				printCustomersInElevatorIfAnnotationsOn();
+				
+				//if(customersWaitingInDirection() || registerList.size() > 0) {
 				move();
+				moveCounter++;
+			}
+			else {
+				printlnIfAnnotationsOn("\n--No more customers waiting in building--\n");
+				//break;
 			}
 		} // end while
-		System.out.println("\nRepopulating Customers for testing."); // testing
+		//printlnIfAnnotationsOn("\nRepopulating Customers for testing."); // testing
 		//populateCustomerList(oldNumberOfCustomers); // testing
+		return moveCounter;
 	}
 	
 //	private void removeCustomer(Customer customer) {
@@ -170,10 +204,19 @@ public class Elevator {
 //		customerList.remove(customer);
 //	}
 	
+	private boolean unservedCustomersRemain() {
+		for(Customer customer : customerList) {
+			if(customer.isFinished() == false) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private void dropOffCustomers() {
 		for(int i=0; i<registerList.size(); i++) {
-			if(registerList.get(i).getDestinationFloor() == getCurrentFloor()) {
-				System.out.println("Customer " + registerList.get(i).getId() + " dropped off."); // Testing only - remove later
+			if(registerList.get(i).getDestinationFloor() == currentFloor) {
+				printlnIfAnnotationsOn("Customer " + registerList.get(i).getId() + " dropped off."); // Testing only - remove later
 				customerLeaves(registerList.get(i));
 				i--;
 			}
@@ -184,8 +227,8 @@ public class Elevator {
 		//for(int i=0; i<customerList.size(); i++) {
 		for(Customer customer : customerList) {
 			if(!customer.isFinished() && !customer.isInElevator()) {
-				if(customer.getCurrentFloor() == getCurrentFloor() && customer.calcDirection().equals(getDirection()) ) {
-					System.out.println("Customer " + customer.getId() + " picked up."); // Testing only - remove later
+				if(customer.getCurrentFloor() == currentFloor && customer.calcDirection().equals(direction) ) {
+					printlnIfAnnotationsOn("Customer " + customer.getId() + " picked up."); // Testing only - remove later
 					customerJoins(customer);
 					//removeCustomer(customer);				
 					//i--;
@@ -194,28 +237,26 @@ public class Elevator {
 		}
 	}
 	
-	private void printCustomersInElevator() {
-		System.out.print("Customers in elevator: ");
-		if(registerList.size() > 0) {
-			for(int i=0; i<registerList.size(); i++) {
-				System.out.print(registerList.get(i).getId());
-				if(i < registerList.size() -1) {
-					System.out.print(", ");
-				}
-			}
-			System.out.println("");
-		}
-		else {
-			System.out.println(" none");
-		}
+	private void customerJoins(Customer customer) {
+		customerList.get(customerList.indexOf(customer)).setInElevator(true);
+		registerList.add(customer);
+	}
+	
+	private void customerLeaves(Customer customer) {
+//		registerList.get(i).setInElevator(false);
+//		registerList.get(i).setFinished(true);
+		customerList.get(customerList.indexOf(customer)).setInElevator(false);
+		customerList.get(customerList.indexOf(customer)).setFinished(true);
+		registerList.remove(customer);
 	}
 	
 	private boolean customersWaitingInDirection() {
 		// If elevator is going up, for all customers, if customer is on a higher floor, or customer is on the same floor and heading up - return true.
-		if(getDirection().equals("up")) {
+		if(direction.equals("up")) {
 			for(Customer customer : customerList) {
 				if(!customer.isFinished() && !customer.isInElevator()) {
-					if(customer.getCurrentFloor() > getCurrentFloor() || (customer.getCurrentFloor() == getCurrentFloor() && customer.calcDirection().equals("up"))) {
+					if(customer.getCurrentFloor() > currentFloor ||
+							(customer.getCurrentFloor() == currentFloor && customer.calcDirection().equals("up"))) {
 						return true;
 					}
 				}
@@ -223,10 +264,11 @@ public class Elevator {
 		}
 		else {
 			// If elevator is going down, for all customers, if customer is on a lower floor, or customer is on the same floor and heading down - return true.
-			if(getDirection().equals("down")) {
+			if(direction.equals("down")) {
 				for(Customer customer : customerList) {
 					if(!customer.isFinished() && !customer.isInElevator()) {
-						if(customer.getCurrentFloor() < getCurrentFloor() || (customer.getCurrentFloor() == getCurrentFloor() && customer.calcDirection().equals("down"))) {
+						if(customer.getCurrentFloor() < currentFloor ||
+								(customer.getCurrentFloor() == currentFloor && customer.calcDirection().equals("down"))) {
 							return true;
 						}
 					}
@@ -239,7 +281,41 @@ public class Elevator {
 		return false;
 	}
 	
-	public void move() {
+	private void changeDirection() {
+		if(direction == "up") {
+			printlnIfAnnotationsOn("--Changing direction to down--");
+			setDirection("down");
+		}
+		else {
+			if(direction == "down") {
+				printlnIfAnnotationsOn("--Changing direction to up--");
+				setDirection("up");
+			}
+			else {
+				System.out.println("Error when trying to change elevator direction: direction is neither up nor down.");
+			}
+		}
+	}
+	
+	private void printCustomersInElevatorIfAnnotationsOn() {
+		if(annotations) {
+			System.out.print("Customers in elevator: ");
+			if(registerList.size() > 0) {
+				for(int i=0; i<registerList.size(); i++) {
+					System.out.print(registerList.get(i).getId());
+					if(i < registerList.size() -1) {
+						System.out.print(", ");
+					}
+				}
+				System.out.println("");
+			}
+			else {
+				System.out.println(" none");
+			}
+		}
+	}
+	
+	private void move() {
 		if(direction == "up") {
 			currentFloor++;
 		}
@@ -251,35 +327,6 @@ public class Elevator {
 		}
 	}
 	
-	public void customerJoins(Customer customer) {
-		customerList.get(customerList.indexOf(customer)).setInElevator(true);
-		registerList.add(customer);
-	}
-	
-	public void customerLeaves(Customer customer) {
-//		registerList.get(i).setInElevator(false);
-//		registerList.get(i).setFinished(true);
-		customerList.get(customerList.indexOf(customer)).setInElevator(false);
-		customerList.get(customerList.indexOf(customer)).setFinished(true);
-		registerList.remove(customer);
-	}
-	
-	public void changeDirection() {
-		if(getDirection() == "up") {
-			System.out.println("--Changing direction to down--");
-			setDirection("down");
-		}
-		else {
-			if(getDirection() == "down") {
-				System.out.println("--Changing direction to up--");
-				setDirection("up");
-			}
-			else {
-				System.out.println("Error when trying to change elevator direction: direction is neither up nor down.");
-			}
-		}
-	}
-	
 	@Override
 	public String toString() {
 		String objString = "";
@@ -287,7 +334,8 @@ public class Elevator {
 //		for(int i=0; i<registerList.size(); i++) {
 //			objString += registerList.get(i);
 //		}
-		objString += "numFloors: " + numFloors + "\ncurrentFloor: " + currentFloor + "\ntopFloor: " + topFloor + "\nbottomFloor: " + bottomFloor + "\ndirection: " + direction + "\n\n";
+		objString += "numFloors: " + numFloors + "\ncurrentFloor: " + currentFloor + "\ntopFloor: " + topFloor
+				+ "\nbottomFloor: " + bottomFloor + "\ndirection: " + direction + "\n\n";
 		return objString;
 	}
 }
