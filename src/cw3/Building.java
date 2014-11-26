@@ -9,6 +9,11 @@ public class Building {
 	private ArrayList<Customer> customerList;
 	private Elevator elevator = null;
 	
+	// Building constructor:
+	// - Takes as arguments: number of floors, number of customers and bottom floor.
+	// - Sets the class' numFloors and bottomFloor.
+	// - Populates customerList with random customers according to the number of customers.
+	// - Set the elevator to a new elevator with the arguments: numFloors, bottomFloor and customerList.
 	public Building(int numFloors, int numCustomers, int bottomFloor) {
 		setBottomFloor(bottomFloor);
 		setNumFloors(numFloors);
@@ -16,6 +21,10 @@ public class Building {
 		setElevator(new Elevator(numFloors, bottomFloor, customerList));
 	}
 	
+	// This method takes the number of customers as an argument and populates customerList with Customer objects with random currentFloor and destinationFloor.
+	// This method ensures that:
+	// - the Customers don't have the same value for currentFloor and destinationFloor.
+	// - the currentFloor and destinationFloor is not 13 for any given Customer. If a randomly selected number happens to be 13, it is changed to 14.
 	public void populateCustomerList(int numCustomers) {
 		customerList = new ArrayList<Customer>();
 		if(numCustomers > 0 && numFloors >= 2) {
@@ -53,6 +62,7 @@ public class Building {
 		return numFloors;
 	}
 
+	// Prints error message if numFloors is smaller than 2.
 	private void setNumFloors(int numFloors) {
 		if(numFloors >= 2) {
 			this.numFloors = numFloors;
@@ -73,10 +83,6 @@ public class Building {
 	public ArrayList<Customer> getCustomerList() {
 		return customerList;
 	}
-
-	/*public void setCustomerList(ArrayList<Customer> customerList) {
-		this.customerList = customerList;
-	}*/
 
 	public Elevator getElevator() {
 		return elevator;

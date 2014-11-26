@@ -8,6 +8,11 @@ public class Customer {
 	private Boolean inElevator = false;
 	private Boolean finished = false;
 	
+	// Customer constructor:
+	// - Takes as arguments: current floor and destination floor.
+	// - Sets the currentFloor and destinationFloor.
+	// - Increments the customerCount.
+	// - Sets the id.
 	public Customer(int currentFloor, int destinationFloor) {
 		setCurrentFloor(currentFloor);
 		setDestinationFloor(destinationFloor);
@@ -21,12 +26,7 @@ public class Customer {
 	}
 
 	private void setCurrentFloor(int currentFloor) {
-		//if(currentFloor >= 0) {
-			this.currentFloor = currentFloor;
-//		}
-//		else {
-//			System.out.println("\nError: Customer cannot get on from a negative floor.");
-//		}
+		this.currentFloor = currentFloor;
 	}
 
 	public int getDestinationFloor() {
@@ -34,12 +34,7 @@ public class Customer {
 	}
 
 	private void setDestinationFloor(int destinationFloor) {
-		//if(destinationFloor >= 0) {
-			this.destinationFloor = destinationFloor;
-//		}
-//		else {
-//			System.out.println("\nError: Customer cannot get off at a negative floor.");
-//		}
+		this.destinationFloor = destinationFloor;
 	}
 
 	public int getId() {
@@ -67,6 +62,8 @@ public class Customer {
 	}
 	// Getters and Setters END
 	
+	// This method infers the Customer's desired direction by comparing the destinationFloor and currentFloor, and returns it to the calling method as a String.
+	// If the Customer wants to get off at the same floor he got on, the method returns "undetermined". 
 	public String calcDirection() {
 		if(destinationFloor > currentFloor) {
 			return "up";
