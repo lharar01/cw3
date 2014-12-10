@@ -52,7 +52,7 @@ public class Building {
 		else {
 			if(numCustomers <= 0)
 			{
-				System.out.println("\nError: The building must have at least one customer and 2 floors.");
+				System.out.println("\nError: The building must have at least one customer.");
 			}
 		}
 	}

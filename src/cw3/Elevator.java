@@ -64,7 +64,12 @@ public class Elevator {
 	}
 
 	public void setCurrentFloor(int currentFloor) {
-		this.currentFloor = currentFloor;
+		if(currentFloor >= bottomFloor && currentFloor <= topFloor) {
+			this.currentFloor = currentFloor;
+		}
+		else {
+			System.out.println("\nError: illegal floor in method setCurrentFloor.");
+		}
 	}
 	
 	public int getTopFloor() {
