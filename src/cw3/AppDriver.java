@@ -22,11 +22,11 @@ public class AppDriver {
 	private static boolean annotations = false;
 	
 	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);		
+		Scanner scanner = new Scanner(System.in);		
 		System.out.println("--==Welcome to Liran and Shay's elevator!==--\n");
 		// Get necessary input from user
-		getInput(input);
-		input.close();
+		getInput(scanner);
+		scanner.close();
 		
 		// Create a new Building object using the user's input.
 		Building building = new Building(floors, customers, bottomFloor);
@@ -53,21 +53,23 @@ public class AppDriver {
 	 * Gets from the user the input that is required for this application to work.
 	 * The input gets stored in the class variables: #floors, #customers, #bottomFloor and #annotations.
 	 * 
-	 * @param input
+	 * @param scanner
 	 */
-	private static void getInput(Scanner input) {
+	private static void getInput(Scanner scanner) {
 		boolean typeMismatch;
 		boolean illegalInput;
 		
-		// The following "do-while" block does the following:
+		// The following THREE "do-while" loops do the following:
 		// - assumes typeMismatch and illegalInput to be true unless proven otherwise.
-		// - Keeps asking for the number of floors while there are errors (wrong type or floors <= 1).  
+		// - Keeps asking for input while there are errors (wrong type or illegal input).
+		
+		// Gets number of floors from the user
 		do {
 			typeMismatch = true;
 			illegalInput = true;
 			System.out.print("Enter the number of floors: ");
-			if(input.hasNextInt()) {
-				floors = input.nextInt();
+			if(scanner.hasNextInt()) {
+				floors = scanner.nextInt();
 				typeMismatch = false;
 				if(floors > 1) {
 					illegalInput = false;
@@ -81,21 +83,20 @@ public class AppDriver {
 					System.out.print("\nThe building must have at least two floors to be equipped with an elevator.");
 				}
 				System.out.println(" Please try again.");
-				input.nextLine();
+				scanner.nextLine();
 			}
 		}
 		while(typeMismatch || illegalInput);
 		
 		System.out.println("");
-		// The following "do-while" block does the following:
-		// - assumes typeMismatch and illegalInput to be true unless proven otherwise.
-		// - Keeps asking for the number of customers while there are errors (wrong type or customers <= 0).
+		
+		// Gets number of customers from the user
 		do {
 			typeMismatch = true;
 			illegalInput = true;
 			System.out.print("Enter the number of customers: ");
-			if(input.hasNextInt()) {
-				customers = input.nextInt();
+			if(scanner.hasNextInt()) {
+				customers = scanner.nextInt();
 				typeMismatch = false;
 				if(customers > 0) {
 					illegalInput = false;
@@ -109,34 +110,42 @@ public class AppDriver {
 					System.out.print("\nThere must be at least one customer in order to use the elevator.");
 				}
 				System.out.println(" Please try again.");
-				input.nextLine();
+				scanner.nextLine();
 			}
 		}
 		while(typeMismatch || illegalInput);
-
-		// The following "do-while" block does the following:
-		// - assumes typeMismatch to be true unless proven otherwise.
-		// - Keeps asking for the number of the bottom floor while a valid type has not been received.
+		
+		// Gets the bottom floor value from the user
 		do {
 			typeMismatch = true;
+			illegalInput = true;
 			System.out.print("Enter the bottom floor: ");
-			if(input.hasNextInt()) {
-				bottomFloor = input.nextInt();
+			if(scanner.hasNextInt()) {
+				bottomFloor = scanner.nextInt();
 				typeMismatch = false;
+				if(bottomFloor <= 1) {
+					illegalInput = false;
+				}
 			}			
-			if(typeMismatch) {
-				System.out.print("\nThe bottom floor must be an integer. Please try again.");
-				input.nextLine();
+			if(typeMismatch || illegalInput) {
+				if(typeMismatch) {
+					System.out.print("\nThe bottom floor must be an integer.");
+				}
+				else {
+					System.out.print("\nThe bottom floor cannot be higher than 1.");
+				}
+				System.out.println(" Please try again.");
+				scanner.nextLine();
 			}
 		}
-		while(typeMismatch);
+		while(typeMismatch || illegalInput);
 		
-		input.nextLine();
+		scanner.nextLine();
 		
-		// Ask the user if they want annotations to be printed while the application runs. Store true in the variable annotations if the answer is
-		// "yes or "y".  
+		// Asks the user if they want annotations to be printed while the application runs. Stores true in the variable annotations if the answer is
+		// "yes" or "y".  
 		System.out.print("Would you like annotations? ");
-		String annotationsAnswer = input.nextLine(); 
+		String annotationsAnswer = scanner.nextLine(); 
 		if(annotationsAnswer.equals("yes") || annotationsAnswer.equals("y")) {
 			annotations = true;
 		}
