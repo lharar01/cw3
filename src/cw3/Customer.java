@@ -1,3 +1,10 @@
+/**
+ * This class denotes an elevator customer.
+ * It is used by the AppDriver class to simulate elevator operation.
+ * 
+ * @author Liran Harary &amp; Shay Meshulam
+ */
+
 package cw3;
 
 public class Customer {
@@ -62,7 +69,7 @@ public class Customer {
 	}
 	// Getters and Setters END
 	
-	// This method infers the Customer's desired direction by comparing the destinationFloor and currentFloor, and returns it to the calling method as a String.
+	// Infers the Customer's desired direction by comparing the destinationFloor and currentFloor, and returns it to the calling method as a String.
 	// If the Customer wants to get off at the same floor he got on, the method returns "undetermined". 
 	public String calcDirection() {
 		if(destinationFloor > currentFloor) {

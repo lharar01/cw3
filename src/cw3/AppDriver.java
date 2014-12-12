@@ -1,3 +1,18 @@
+/**
+ * This application uses the classes Building, Elevator and Customer to simulate elevator operation in an American-style
+ * building (no 13th floor). The user inputs The number of floors, the number of customers, the bottom floor and whether
+ * or not they would like annotations. The customers in the building are chosen at random and provided to the elevator,
+ * alongside the number of floors and the bottom floor.
+ * The elevator simulates 2 strategies:
+ * - Default strategy: Start at the bottom, go to the top and back to the bottom.
+ * - Improved strategy: Start from current position and direction; change direction when finished serving customers in that
+ * direction; and only go as far as necessary.
+ * 
+ * These two methods (the strategies) return the number of moves it took them to serve all customers.
+ * The results are then printed to the console.
+ * 
+ * @author Liran Harary &amp; Shay Meshulam
+ */
 package cw3;
 
 import java.util.Scanner;
@@ -34,8 +49,12 @@ public class AppDriver {
 		System.out.print("\nImproved strategy elevator served the customers in " + movesImproved + " moves.");
 	}
 	
-	// This method gets from the user the input that is required for this application to work.
-	// The input gets stored in the class variables: floors, customers, bottomFloor and annotations. 
+	/**
+	 * Gets from the user the input that is required for this application to work.
+	 * The input gets stored in the class variables: #floors, #customers, #bottomFloor and #annotations.
+	 * 
+	 * @param input
+	 */
 	private static void getInput(Scanner input) {
 		boolean typeMismatch;
 		boolean illegalInput;

@@ -1,3 +1,15 @@
+/**
+ * This class denotes an American-style elevator (no 13th floor) with two strategies:
+ * - Default strategy: Start at the bottom, go to the top and then back to the bottom.
+ * - Improved strategy: Start from current position and direction; change direction when finished serving customers in that
+ * direction; and only go as far as necessary.
+ * 
+ * These two methods (the strategies) return the number of moves it took them to serve all customers.
+ * This class is used by the AppDriver class to simulate elevator operation.
+ * 
+ * @author Liran Harary &amp; Shay Meshulam
+ */
+
 package cw3;
 
 import java.util.ArrayList;
@@ -31,7 +43,7 @@ public class Elevator {
 		return numFloors;
 	}
 	
-	// This method gets the number of floors as an argument and sets numFloors to its value. It thereafter infers the topFloor value by the values of
+	// Gets the number of floors as an argument and sets numFloors to its value. It thereafter infers the topFloor value by the values of
 	// numFloors and bottomFloor and sets the topFloor value.
 	// It prints an error message if numFloors is smaller than 2.
 	private void setNumFloorsAndTopFloor(int numFloors) {
@@ -101,21 +113,21 @@ public class Elevator {
 	}
 	// Getters and Setters END
 
-	// This method takes a String as an argument and performs System.out.println with it as an argument, only if annotations are on (i.e. true).
+	// Takes a String as an argument and performs System.out.println with it as an argument, only if annotations are on (i.e. true).
 	private void printlnIfAnnotationsOn(String printStr) {
 		if(annotations) {
 			System.out.println(printStr);
 		}
 	}
 	
-	// This method iterates through customerList, setting each one's "finished" attribute to false (via the setFinished() method). 
+	// Iterates through customerList, setting each one's "finished" attribute to false (via the setFinished() method). 
 	public void setAllCustomersToNotFinished() {
 		for(Customer customer : customerList) {
 			customer.setFinished(false);
 		}
 	}
 	
-	// This method starts the elevator at default strategy:
+	// Starts the elevator at default strategy:
 	// - Start at the bottom floor.
 	// - Go to the top floor.
 	// - Go back down to the bottom floor.
@@ -169,7 +181,7 @@ public class Elevator {
 		return moveCounter;
 	}
 	
-	// This method starts the elevator at improved strategy:
+	// Starts the elevator at improved strategy:
 		// - Start at the CURRENT floor. (This saves the elevator a trip to the bottom floor, if a second run was needed (and implemented).
 		// - Only go as high as necessary on the way up, and as low as necessary on the way down, using the methods: unservedCustomersRemain() and
 		// customersWaitingInDirection() to determine whether to keep moving / change direction / stop.
@@ -230,7 +242,7 @@ public class Elevator {
 		return moveCounter;
 	}
 	
-	// This method iterates through customerList and returns true if any customer is not finished (isFinished == false), and false if all customers are finished. 
+	// Iterates through customerList and returns true if any customer is not finished (isFinished == false), and false if all customers are finished. 
 	private boolean unservedCustomersRemain() {
 		for(Customer customer : customerList) {
 			if(customer.isFinished() == false) {
@@ -240,7 +252,7 @@ public class Elevator {
 		return false;
 	}
 	
-	// This method checks if any Customers in the elevator need to be dropped at the current floor.
+	// Checks if any Customers in the elevator need to be dropped at the current floor.
 	// It iterates through registerList and does the following for each customer with the same destination floor as the current floor:
 	// - Prints a message saying which customer got dropped off, if annotations are turned on.
 	// - Calls the customerLeaves() method (described later) with the Customer object sent as an argument.
@@ -254,7 +266,7 @@ public class Elevator {
 		}
 	}
 	
-	// This method checks if any Customers need to be picked up at the current floor.
+	// Checks if any Customers need to be picked up at the current floor.
 	// It iterates through customerList and looks for Customers who are: 
 	// - not finished, AND
 	// - not in elevator, AND
@@ -273,7 +285,7 @@ public class Elevator {
 		}
 	}
 	
-	// This method is called when it has been determined that a Customer should join the elevator.
+	// Invoked when it has been determined that a Customer should join the elevator.
 	// It takes a Customer object and does 2 things:
 	// - Sets the Customer's inElevator property to true.
 	// - Adds the Customer to the registerList.
@@ -282,7 +294,7 @@ public class Elevator {
 		registerList.add(customer);
 	}
 	
-	// This method is called when it has been determined that a Customer should leave the elevator.
+	// Invoked when it has been determined that a Customer should leave the elevator.
 	// It takes a Customer object and does 3 things:
 	// - Sets the Customer's inElevator property to false.
 	// - Sets the Customer's isFinished property to true.
@@ -293,7 +305,7 @@ public class Elevator {
 		registerList.remove(customer);
 	}
 	
-	// This method returns true if there are Customers waiting in the elevator's direction, and false otherwise.
+	// Returns true if there are Customers waiting in the elevator's direction, and false otherwise.
 	private boolean customersWaitingInDirection() {
 		// If elevator is going up, for all Customers, if a Customer is:
 		// - not finished, AND
@@ -335,7 +347,7 @@ public class Elevator {
 		return false;
 	}
 	
-	// This method changes the elevator's direction to its opposite if it's "up" or "down", and prints and error otherwise.
+	// Changes the elevator's direction to its opposite if it's "up" or "down", and prints and error otherwise.
 	// Upon changing the direction, if annotations are turned on, it prints a message saying what direction it changed it to.
 	private void changeDirection() {
 		if(direction == "up") {
@@ -353,7 +365,7 @@ public class Elevator {
 		}
 	}
 	
-	// If annotations are turned on, this method iterates through the registerList and prints all Customers within it.
+	// If annotations are turned on, iterates through the registerList and prints all Customers within it.
 	private void printCustomersInElevatorIfAnnotationsOn() {
 		if(annotations) {
 			System.out.print("Customers in elevator: ");
@@ -372,7 +384,7 @@ public class Elevator {
 		}
 	}
 	
-	// This method moves the elevator once in its direction. If after the move the elevator is at floor 13, the method will move the elevator again.
+	// Moves the elevator once in its direction. If after the move the elevator is at floor 13, the method will move the elevator again.
 	private void move() {
 		if(direction == "up") {
 			currentFloor++;

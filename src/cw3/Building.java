@@ -1,3 +1,10 @@
+/**
+ * This class denotes an American-style building (no 13th floor) with an elevator and randomly chosen customers.
+ * It is used by the AppDriver class to simulate elevator operation.
+ * 
+ * @author Liran Harary &amp; Shay Meshulam
+ */
+
 package cw3;
 
 import java.util.ArrayList;
@@ -21,8 +28,8 @@ public class Building {
 		setElevator(new Elevator(numFloors, bottomFloor, customerList));
 	}
 	
-	// This method takes the number of customers as an argument and populates customerList with Customer objects with random currentFloor and destinationFloor.
-	// This method ensures that:
+	// Takes the number of customers as an argument and populates customerList with Customer objects with random currentFloor and destinationFloor.
+	// Ensures that:
 	// - the Customers don't have the same value for currentFloor and destinationFloor.
 	// - the currentFloor and destinationFloor is not 13 for any given Customer. If a randomly selected number happens to be 13, it is changed to 14.
 	public void populateCustomerList(int numCustomers) {
