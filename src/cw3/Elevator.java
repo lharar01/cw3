@@ -1,3 +1,7 @@
+package cw3;
+
+import java.util.ArrayList;
+
 /**
  * This class denotes an American-style elevator (no 13th floor) with two strategies:
  * - Default strategy: Start at the bottom, go to the top and then back to the bottom.
@@ -8,12 +12,9 @@
  * This class is used by the AppDriver class to simulate elevator operation.
  * 
  * @author Liran Harary &amp; Shay Meshulam
+ * @version 1.0
+ * @since 10th November 2014
  */
-
-package cw3;
-
-import java.util.ArrayList;
-
 public class Elevator {
 	private int numFloors = 0;
 	// Customers in the elevator

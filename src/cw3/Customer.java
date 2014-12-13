@@ -1,12 +1,13 @@
+package cw3;
+
 /**
  * This class denotes an elevator customer.
  * It is used by the AppDriver class to simulate elevator operation.
  * 
  * @author Liran Harary &amp; Shay Meshulam
+ * @version 1.0
+ * @since 10th November 2014
  */
-
-package cw3;
-
 public class Customer {
 	private int currentFloor = 0;
 	private int destinationFloor = 0;
