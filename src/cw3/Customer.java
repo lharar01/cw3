@@ -2,25 +2,42 @@ package cw3;
 
 /**
  * This class denotes an elevator customer.
- * It is used by the AppDriver class to simulate elevator operation.
+ * <p>It is used by the AppDriver class to simulate elevator operation.
  * 
  * @author Liran Harary &amp; Shay Meshulam
  * @version 1.0
  * @since 10th November 2014
  */
 public class Customer {
-	private int currentFloor = 0;
-	private int destinationFloor = 0;
+	/** The number of customers that were created by this class thus far */
 	private static int customerCount = 0;
+	
+	/** The floor this customer is on */
+	private int currentFloor = 0;
+	
+	/** This customer's destination floor */
+	private int destinationFloor = 0;
+	
+	
+	/** This customer's id. Starts from 0 and incremented by 1 with each Customer instantiation */
 	private int id = 0;
+	
+	/** Whether or not the customer is currently in the elevator */
 	private Boolean inElevator = false;
+	
+	/** Whether or not the customer has been served */
 	private Boolean finished = false;
 	
-	// Customer constructor:
-	// - Takes as arguments: current floor and destination floor.
-	// - Sets the currentFloor and destinationFloor.
-	// - Increments the customerCount.
-	// - Sets the id.
+	 /**
+	  * <ul>
+	  * <li>Takes as arguments: current floor and destination floor.</li>
+	  * <li>Sets the {@link #currentFloor} and {@link #destinationFloor}.</li>
+	  * <li>Increments the {@link #customerCount}.</li>
+	  * <li>Sets the {@link #id}.</li>
+	  * 
+	  * @param currentFloor  This customer's current floor
+	  * @param destinationFloor  This customer's destination floor
+	  */
 	public Customer(int currentFloor, int destinationFloor) {
 		setCurrentFloor(currentFloor);
 		setDestinationFloor(destinationFloor);
@@ -29,6 +46,11 @@ public class Customer {
 	}
 	
 	// Getters and Setters START
+	/**
+	 * Returns the floor this customer is on.
+	 * 
+	 * @return currentFloor
+	 */
 	public int getCurrentFloor() {
 		return currentFloor;
 	}
@@ -85,9 +107,6 @@ public class Customer {
 	@Override
 	public String toString() {
 		String objString = "";
-//		private String id = null;
-//		private Boolean inElevator = false;
-//		private Boolean finished = false;
 		objString += "id: " + id + "\ncurrentFloor: " + currentFloor + "\ndestinationFloor: " + destinationFloor
 				+ "\ncalcDirection(): " + calcDirection() + "\n\n";
 		return objString;

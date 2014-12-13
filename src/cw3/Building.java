@@ -87,7 +87,6 @@ public class Building {
 	}
 
 	// Getters and Setters START
-	
 	/**
 	 * Returns the number of floors in this building
 	 * 
@@ -150,12 +149,11 @@ public class Building {
 	/**
 	 * Sets this building's {@link #elevator}
 	 * 
-	 * @param elevator  This building's elevator
+	 * @param  elevator  This building's elevator
 	 */
 	private void setElevator(Elevator elevator) {
 		this.elevator = elevator;
 	}
-
 	// Getters and Setters END
 	
 	/**
