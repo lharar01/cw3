@@ -3,7 +3,7 @@ package cw3;
 import java.util.ArrayList;
 
 /**
- * This class denotes an American-style elevator (no 13th floor) with two strategies:
+ * <p>This class denotes an American-style elevator (no 13th floor) with two strategies:</p>
  * <ul>
  * <li>Default strategy: Start at the bottom, go to the top and then back to the bottom.</li>
  * <li>Improved strategy: Start from current position and direction; change direction when finished serving customers in that
@@ -127,7 +127,7 @@ public class Elevator {
 	}
 	
 	/**
-	 * Sets this elevator's current floor.
+	 * Sets this elevator's {@link #currentFloor}.
 	 * <p>Prints error message if <code>currentFloor</code> parameter is not between the {@link #bottomFloor} and {@link #topFloor}.  
 	 * 
 	 * @param currentFloor  This elevator's current floor
@@ -290,7 +290,7 @@ public class Elevator {
 	 /**
 	  * Starts the elevator at improved strategy:
 	  * <ul>
-	  * <li>Starts at the CURRENT floor (This saves the elevator a trip to the bottom floor, if a second run was
+	  * <li>Starts at the <strong>current</strong> floor (This saves the elevator a trip to the bottom floor, if a second run was
 	  * needed (and implemented).</li>
 	  * <li>Only goes as high as necessary on the way up, and as low as necessary on the way down, using the methods:
 	  * {@link #unservedCustomersRemain()} and {@link #customersWaitingInDirection()} to determine whether to
@@ -378,7 +378,7 @@ public class Elevator {
 	  * the current floor:
 	  * <ul>
 	  * <li>Prints a message saying which customer got dropped off, if {@link #annotations} are turned on.</li>
-	  * <li>Invokes the {@link #customerLeaves()} method with the Customer object sent as an argument.</li>
+	  * <li>Invokes the {@link #customerLeaves(Customer)} method with the Customer object sent as an argument.</li>
 	  * </ul>
 	  */
 	private void dropOffCustomers() {
@@ -403,7 +403,8 @@ public class Elevator {
 	  * For any such Customer, the method:
 	  * <ul>
 	  * <li>Prints a message saying which customer got picked up, if {@link #annotations} are turned on.</li>
-	  * <li>Calls the {@link #customerJoins()} method with the Customer object sent as an argument.</li>
+	  * <li>Calls the {@link #customerJoins(Customer)} method with the Customer object sent as an argument.</li>
+	  * </ul>
 	  */
 	private void pickUpCustomers() {
 		for(Customer customer : customerList) {
@@ -420,6 +421,7 @@ public class Elevator {
 	  * <ul>
 	  * <li>Sets the Customer's <code>inElevator</code> property to <code>true</code>.</li>
 	  * <li>Adds the Customer to the {@link #registerList}.</li>
+	  * </ul>
 	  * 
 	  * @param customer  The Customer object in question
 	  */
@@ -435,6 +437,7 @@ public class Elevator {
 	  * <li>Sets the Customer's <code>inElevator</code> property to <code>false</code>.</li>
 	  * <li>Sets the Customer's <code>isFinished</code> property to <code>true</code>.</li>
 	  * <li>Removes the Customer from the {@link #registerList}.</li>
+	  * </ul>
 	  * 
 	  * @param customer  The Customer object in question
 	  */
@@ -493,7 +496,7 @@ public class Elevator {
 	
 	/**
 	 * Changes this elevator's {@link #direction} to its opposite if it's "up" or "down", and prints and error otherwise.
-	// Upon changing the direction, if {@link #annotations} are turned on, it prints a message saying what direction it changed it to.
+	 * <p>Upon changing the direction, if {@link #annotations} are turned on, it prints a message saying what direction it changed it to.
 	 */
 	private void changeDirection() {
 		if(direction == "up") {
@@ -545,7 +548,7 @@ public class Elevator {
 	}
 	
 	/**
-	 * Returns a summary of this elevator in a readable format.
+	 * Returns a summary of this elevator's properties in a readable format.
 	 * 
 	 * @return  objString
 	 */

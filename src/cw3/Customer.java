@@ -34,6 +34,7 @@ public class Customer {
 	  * <li>Sets the {@link #currentFloor} and {@link #destinationFloor}.</li>
 	  * <li>Increments the {@link #customerCount}.</li>
 	  * <li>Sets the {@link #id}.</li>
+	  * </ul>
 	  * 
 	  * @param currentFloor  This customer's current floor
 	  * @param destinationFloor  This customer's destination floor
@@ -54,46 +55,96 @@ public class Customer {
 	public int getCurrentFloor() {
 		return currentFloor;
 	}
-
+	
+	/**
+	 * Sets this customer's {@link #currentFloor}.
+	 * 
+	 * @param currentFloor  The floor this customer is on.
+	 */
 	private void setCurrentFloor(int currentFloor) {
 		this.currentFloor = currentFloor;
 	}
 
+	/**
+	 * Returns this customer's destination floor.
+	 * 
+	 * @return  destinationFloor
+	 */
 	public int getDestinationFloor() {
 		return destinationFloor;
 	}
 
+	/**
+	 * Sets this customer's {@link #destinationFloor}.
+	 * 
+	 * @param  destinationFloor  The floor this customer wishes to get to.
+	 */
 	private void setDestinationFloor(int destinationFloor) {
 		this.destinationFloor = destinationFloor;
 	}
 
+	/**
+	 * Returns this customer's unique id.
+	 * 
+	 * @return  id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Sets this customer's {@link #id}.
+	 * 
+	 * @param  id  This customer's unique id
+	 */
 	private void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Returns whether or not this customer is currently in the elevator.
+	 * 
+	 * @return  inElevator
+	 */
 	public Boolean isInElevator() {
 		return inElevator;
 	}
 
+	/**
+	 * Sets this customer's {@link #inElevator}.
+	 * 
+	 * @param  inElevator  whether or not this customer is in the elevator
+	 */
 	public void setInElevator(Boolean inElevator) {
 		this.inElevator = inElevator;
 	}
 
+	/**
+	 * Returns whether or not this customer has been served by the elevator.
+	 * 
+	 * @return  finished
+	 */
 	public Boolean isFinished() {
 		return finished;
 	}
 
+	/**
+	 * Sets this customer's {@link #finished}
+	 * 
+	 * @param  finished  whether or not this customer has been served by the elevator
+	 */
 	public void setFinished(Boolean finished) {
 		this.finished = finished;
 	}
 	// Getters and Setters END
 	
-	// Infers the Customer's desired direction by comparing the destinationFloor and currentFloor, and returns it to the calling method as a String.
-	// If the Customer wants to get off at the same floor he got on, the method returns "undetermined". 
+	 /**
+	  * Infers the Customer's desired direction by comparing the destinationFloor and currentFloor,
+	  * and returns it as a String.
+	  * If the Customer wants to get off at the same floor he got on, the method returns "undetermined".
+	  *  
+	  * @return  the customer's desired direction
+	  */
 	public String calcDirection() {
 		if(destinationFloor > currentFloor) {
 			return "up";
@@ -104,6 +155,11 @@ public class Customer {
 		return "undetermined";
 	}
 	
+	/**
+	 * Returns a summary of this customer's properties in a readable format.
+	 * 
+	 * @return  objString
+	 */
 	@Override
 	public String toString() {
 		String objString = "";

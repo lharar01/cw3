@@ -29,24 +29,24 @@ public class AppDriver {
 	/** Number of customers in the building: sent as an argument to the <code>Building</code> object. */
 	private static int customers = 0;
 	
-	/** bottomFloor   The bottom floor of the building: sent as an argument to the <code>Building</code> object. */
+	/** The bottom floor of the building: sent as an argument to the <code>Building</code> object. */
 	private static int bottomFloor = -2;
 	
 	/**
-	 * movesDefault   The number of moves that the elevator took to serve all customers in the building, using the
+	 * The number of moves that the elevator took to serve all customers in the building, using the
 	 * <strong>Default Strategy</strong>: sent as an argument to the <code>Building</code>'s <code>Elevator</code>'s
 	 * <code>startElevatorDefaultStrategy</code> method.
 	 */
 	private static int movesDefault = -1;
 	
 	/**
-	 * movesImproved  The number of moves that the elevator took to serve all customers in the building, using the
+	 * The number of moves that the elevator took to serve all customers in the building, using the
 	 * <strong>Improved Strategy</strong>: sent as an argument to the <code>Building</code>'s <code>Elevator</code>'s
 	 * <code>startElevatorImprovedStrategy</code> method.
 	 */
 	private static int movesImproved = -1;
 	
-	/** annotations    Indicates whether or not to use annotations. */
+	/** Indicates whether or not to use annotations. */
 	private static boolean annotations = false;
 	
 	public static void main(String[] args) {
@@ -79,7 +79,7 @@ public class AppDriver {
 	
 	/**
 	 * Gets from the user the input that is required for this application to work.
-	 * The input gets stored in the class variables: #floors, #customers, #bottomFloor and #annotations.
+	 * The input gets stored in the class variables: {@link #floors}, {@link #customers}, {@link #bottomFloor} and {@link #annotations}.
 	 * 
 	 * @param  scanner  input scanner of class Scanner. 
 	 */

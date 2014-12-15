@@ -157,7 +157,7 @@ public class Building {
 	// Getters and Setters END
 	
 	/**
-	 * Returns a summary of this building in a readable format.
+	 * Returns a summary of this building's properties in a readable format.
 	 * 
 	 * @return  objString
 	 */
